@@ -7,10 +7,10 @@ With [Project Name], we plan on providing plant-owners with a simple way to keep
 ## Technical Description
 
 ### Architectural Diagram
+The diagram --> please check attachment. 
 
 
-
-### User Stories 
+### User Stories
 | Priority | User | Description |
 | --- | --- | --- |
 | P0 | As a user | I want to see the status of my plants that shows if it needs to be watered |
@@ -53,4 +53,3 @@ With [Project Name], we plan on providing plant-owners with a simple way to keep
 |        |                |                                                              |
 |        |                |                                                              |
 |        |                |                                                              |
-
