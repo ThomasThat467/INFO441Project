@@ -2,7 +2,7 @@
 
 ## Project Description
 
-With [Project Name], we plan on providing plant-owners with a simple way to keep track of their household or garden plants. Multiple plants have different watering schedules so it's hard to keep track of when each plant needs flowering. Our app aims to help keep track of that by setting up regular watering intervals so that they don't water their plants too little or too much. We, as a team, understand these issues of keeping our vegetation growing at a healthy rate so we wish to provide an app that will answer anyone who shares our problems.
+With [Project Name], we plan on providing plant-owners with a simple way to keep track of their household or garden plants. So often people forget to water their plants or don't know how often to water the specific plant. Multiple plants have different watering schedules so it's hard to keep track of when each plant needs watering. So our target audience is students and busy professionals. Of course our target users could just look up this information about their plants online and set reminders on their phone but our application brings these two features together to make the information more accessible and faster to find. Our app aims to help users care for their plants by setting up regular watering intervals so that they don't water their plants too little or too much. As busy college students ourselves we understand the difficulty people face will caring for houseplants so we wanted to build an application that would not only benefit us but other busy people as well.
 
 ## Technical Description
 
