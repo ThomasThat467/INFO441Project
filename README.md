@@ -6,6 +6,10 @@ With [Project Name], we plan on providing plant-owners with a simple way to keep
 
 ## Technical Description
 
+### Architectural Diagram
+
+
+
 ### User Stories 
 | Priority | User | Description |
 | --- | --- | --- |
@@ -31,3 +35,22 @@ With [Project Name], we plan on providing plant-owners with a simple way to keep
 - We'll set up a function to grab only the rows of our DB that meet the criteria of the filter
 - We'll set up a search bar to do the same thing
 - If there is still time, we may add a microservice to our API to store images on
+
+
+
+## Endpoints
+
+| Method | Path           | Use Case                                                     |
+| :----: | -------------- | ------------------------------------------------------------ |
+|  GET   | /plant/{id}    | Retrieve the details of a plant from the user's inventory    |
+| PATCH  | /plant/{id}    | Update plant history (i.e. last watered, last fertilized)    |
+|  POST  | /plant/        | Add a new plant to the user's inventory for tracking         |
+| DELETE | /plant/{id}    | Remove a plant from the user's inventory                     |
+|  GET   | /schedule/{id} | Retrieve details about the user's watering or fertilizing schedules |
+|  POST  | /schedule/     | Create a new watering or fertilizing schedule for a user     |
+|        |                |                                                              |
+|        |                |                                                              |
+|        |                |                                                              |
+|        |                |                                                              |
+|        |                |                                                              |
+
