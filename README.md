@@ -7,7 +7,7 @@ With [Project Name], we plan on providing plant-owners with a simple way to keep
 ## Technical Description
 
 ### Architectural Diagram
-The diagram --> please check attachment. 
+![Plant Helper project Diagram](diagram/INFO441_PlantHelperDiagram.png)
 
 
 ### User Stories
