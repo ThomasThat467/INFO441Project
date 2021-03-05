@@ -1,0 +1,61 @@
+{"plantInventory":
+	[     
+		{"id":1,
+		"cn":"ArrowRoot Plant",
+		"wateringSchedule":[
+			"Monday",
+			"Friday"
+		],
+		"lastWatered": "2020-05-14T17:00:10.859Z",
+		"img": "./img/ArrowRootPlant.jpg"},
+		{"id":2,
+		"cn":"Christmas Cactus",
+		"wateringSchedule":[
+			"Saturday"
+		],
+		"lastWatered": "2020-05-13T17:00:10.859Z",
+		"img": "./img/ChristmasCactus.jpg"},
+		{"id":3,
+		"cn":"Easter Cactus",
+		"wateringSchedule":[
+			"Sunday"
+		],
+		"lastWatered": "2020-05-12T17:00:10.859Z",
+		"img": "./img/EasterCactus.jpg"},
+		{"id":4,
+		"cn":"Lipstick Plant",
+		"wateringSchedule":[
+			"Monday",
+			"Friday"
+		],
+		"lastWatered": "2020-05-11T17:00:10.859Z",
+		"img": "./img/LipstickPlant.jpg"},
+		{"id":5,
+		"cn":"Prayer Plant",
+		"wateringSchedule":[
+			"Monday",
+			"Friday"
+		],
+		"lastWatered": "2020-05-10T17:00:10.859Z",
+		"img": "./img/PrayerPlant.jpg"},
+		{"id":6,
+		"cn":"Pothos Plant",
+		"wateringSchedule":[
+			"Monday",
+			"Wednesday",
+			"Friday"
+
+		],
+		"lastWatered": "2020-05-09T17:00:10.859Z",
+		"img": "./img/VariegatedPothos.jpg"},
+		{"id":7,
+		"cn":"Spider Plant Plant",
+		"wateringSchedule":[
+			"Monday",
+			"Wednesday",
+			"Friday"
+		],
+		"lastWatered": "2020-05-08T17:00:10.859Z",
+		"img": "./img/VariegatedSpiderPlant.jpg"}
+	]
+}
