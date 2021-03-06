@@ -1,16 +1,26 @@
-# INFO441Project
+# INFO441 - Plant Helper
+
+### Eric Gabrielson, Hailey Meister, Jisu Kim, Thomas That
 
 ## Project Description
 
+<<<<<<< HEAD
 With Plant Tracker, we plan on providing plant-owners with a simple way to keep track of their household or garden plants. So often people forget to water their plants or don't know how often to water the specific plant. Multiple plants have different watering schedules so it's hard to keep track of when each plant needs watering. So our target audience is students and busy professionals. Of course our target users could just look up this information about their plants online and set reminders on their phone but our application brings these two features together to make the information more accessible and faster to find. Our app aims to help users care for their plants by setting up regular watering intervals so that they don't water their plants too little or too much. As busy college students ourselves we understand the difficulty people face will caring for houseplants so we wanted to build an application that would not only benefit us but other busy people as well.
+=======
+Our application will help users track their care for their houseplants. We do think that everyone could benefit from and find a use for this application, but our target audience is students and busy professionals.
+
+So often, people forget to water their plants or don't know how often to water the specific plant. Of course our target users could just look up this information about their plants online and set reminders on their phone. But our application brings these features together and more to make information more accessible and faster to find and record. 
+
+As busy college students ourselves we understand the difficulty people face while caring for houseplants so we wanted to build an application that would not only benefit us but other busy people as well. Everyone could use a little plant in their life but oftentimes the care needed stops people, since they have a bad track record with caring for plants. This application will help the people who want plants, but don't think they can keep them alive, or care for them properly.
+>>>>>>> main
 
 ## Technical Description
 
 ### Architectural Diagram
+![Plant Helper project Diagram](diagram/INFO441_PlantHelperDiagram.png)
 
 
-
-### User Stories 
+### User Stories
 | Priority | User | Description |
 | --- | --- | --- |
 | P0 | As a user | I want to see the status of my plants that shows if it needs to be watered |
@@ -26,7 +36,7 @@ With Plant Tracker, we plan on providing plant-owners with a simple way to keep 
 
 ### Technical Implementations
 - To show when the plants need watering, we'll have a timer that goes down based on the water interval that the user provides and when it reaches the end, it will show a status that says "Needs watering"
-- We'll have a **MySQL** database to store a table that holds information about each plant connected through a **Redis** network
+- We'll have a **MySQL** database to store a table that holds information about each plant connected through a **Docker** network
 - We'll connect to the database and add Plant structs to the DB
 - We'll have timestamps of when the last watering was and use the water interval to calculate the next time the plant will need watering
 - We'll have timestamps for the last fertilization as well
@@ -48,9 +58,9 @@ With Plant Tracker, we plan on providing plant-owners with a simple way to keep 
 | DELETE | /plant/{id}    | Remove a plant from the user's inventory                     |
 |  GET   | /schedule/{id} | Retrieve details about the user's watering or fertilizing schedules |
 |  POST  | /schedule/     | Create a new watering or fertilizing schedule for a user     |
-|        |                |                                                              |
-|        |                |                                                              |
-|        |                |                                                              |
-|        |                |                                                              |
-|        |                |                                                              |
+|  POST  | /user          | Create a new user                                            |
+|  GET   | /users/{id}    | Retrieve a user profile                                      |
+|  POST  | /sessions      | Begin a new user session                                     |
+| DELETE | /sessions/{id} | Delete a user session                                        |
 
+![Plant Helper ERD](diagram/PlantHelper_ERD.png)
