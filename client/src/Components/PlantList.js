@@ -10,12 +10,6 @@ export class PlantList extends Component {
     }
 
     componentDidMount() {
-        
-        // plantsRef.on('value', (snapshot) => {
-        //     // console.log(snapshot.val());
-        //     // console.log(this)
-        //     this.setState({plants: snapshot.val()})
-        // });
 
         // plantsRef.on('value', (snapshot) => {
         //     let value = snapshot.val();
