@@ -6,7 +6,7 @@
 
 Our application will help users track their care for their houseplants. We do think that everyone could benefit from and find a use for this application, but our target audience is students and busy professionals.
 
-So often, people forget to water their plants or don't know how often to water the specific plant. Of course our target users could just look up this information about their plants online and set reminders on their phone. But our application brings these features together and more to make information more accessible and faster to find and record. 
+So often, people forget to water their plants or don't know how often to water the specific plant. Of course our target users could just look up this information about their plants online and set reminders on their phone. But our application brings these features together and more to make information more accessible and faster to find and record.
 
 As busy college students ourselves we understand the difficulty people face while caring for houseplants so we wanted to build an application that would not only benefit us but other busy people as well. Everyone could use a little plant in their life but oftentimes the care needed stops people, since they have a bad track record with caring for plants. This application will help the people who want plants, but don't think they can keep them alive, or care for them properly.
 
