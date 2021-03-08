@@ -1,162 +1,99 @@
-import React, { Component} from 'react';
-import './index.css';
-import {Button} from 'reactstrap'
-import 'whatwg-fetch';
-import {PlantList} from './Components/PlantList.js'
-import {AddPlantModal} from './Components/AddPlant.js'
-//import {LoginForm} from './Components/Login.js'
-import {Route, NavLink} from 'react-router-dom';
-
+import React, { Component } from 'react';
+import Auth from './Components/Auth/Auth';
+import PageTypes from './Constants/PageTypes';
+import Main from './Components/Main/Main';
+import './Styles/App.css';
+import api from './Constants/APIEndpoints';
 
 class App extends Component {
-    constructor(props){
-        super(props);
+    constructor() {
+        super();
         this.state = {
-            plants: [],
-            signedIn: false, 
-            isModalOpen: false
-        };
-        // this.toggleModal = this.toggleModal.bind(this);
+            page: localStorage.getItem("Authorization") ? PageTypes.signedInMain : PageTypes.signIn,
+            authToken: localStorage.getItem("Authorization") || null,
+            user: null
+        }
+
+        this.getCurrentUser()
     }
 
-    componentDidMount() {
-        fetch('data/inventory.json')
-        .then( (response) => {
-            return response.json();
-        })
-        .then( (data) => {
-            this.setState({plants: data.plantInventory})
-        })
 
-    }
-
-    // handleSignUp = (props) => {
-    //     console.log("handleSignUp scope")
-    //     console.log(props)
-    //       .then((userCredential) => {
-    //         let user = userCredential.user;
-    //         console.log(user);
-    
-    //         let updatePromise = user.updateProfile({displayName: this.state.username})
-    //         return updatePromise;
-    //       })
-    //       .then(() => {
-    //         this.setState((prevState) => {
-    //           let updatedUser = {...prevState.user, displayName: this.state.username}
-    //           return {user: updatedUser}; //updating the state
-    //         });
-    //       })
-    //       .catch((err) => {
-    //         this.setState({errorMessage: err.message});
-    //       })
-        
-    // }
-
-    handleSignIn = (props) => {
-        console.log('handleSignIn called')
-        .then((signInObj) => {
-            if (signInObj) {
-                this.setState({signedIn: true})
-                console.log(signInObj.user)
-            } 
-        })
-          .catch((err) => {
-            this.setState({errorMessage: err.message});
-          })
+    /**
+     * @description Gets the users
+     */
+    getCurrentUser = async () => {
+        if (!this.state.authToken) {
+            return;
+        }
+        const response = await fetch(api.base + api.handlers.myuser, {
+            headers: new Headers({
+                "Authorization": this.state.authToken
+            })
+        });
+        if (response.status >= 300) {
+            alert("Unable to verify login. Logging out...");
+            localStorage.setItem("Authorization", "");
+            this.setAuthToken("");
+            this.setUser(null)
+            return;
+        }
+        const user = await response.json()
+        this.setUser(user);
 
     }
 
-    // handleSignOut = (props) => {
-    //     .then( () => {
-    //         this.setState({signedIn: false})
-    //     })
-    //     .catch((err) => {
-    //         this.setState({errorMessage: err.message});
-    //     })
-    // }
-
-    // addPlant = (plant) => {
-    //     console.log("addPlant called")
-    //     console.log(plant);
-    //     console.log(this.state);
-    // }
-
-    render() {
-        // console.log(this.toggleModal)
-
-        let content = null;
-        // if (!this.state.signedIn){
-        //     content = (
-        //         <Route
-        //         path="/"
-        //         render={
-        //             (props) =>
-        //             <LoginForm signUpCallback={this.handleSignUp} signInCallback={this.handleSignIn}/>
-        //         } /> )
-        // } else {
-            content = (
-                <div>
-                    <Header addPlantCallback={this.addPlant} handleSignOutCallback={this.handleSignOut}></Header>
-                    
-                    <Route
-                        path="/"
-                        render={ 
-                            (props) => 
-                                <PlantList plants={this.state.plants}/>
-                        } 
-                    />
-                </div>
-            );
-        //}
-
-        return (<div>{content}</div>);
+    /**
+     * @description sets the page type to sign in
+     */
+    setPageToSignIn = (e) => {
+        e.preventDefault();
+        this.setState({ page: PageTypes.signIn });
     }
-}
 
-class Header extends Component {
-    constructor(props){
-        super(props);
-        this.addPlantCallback = this.props.addPlantCallback;
-        this.handleSignOutCallback = this.props.handleSignOutCallback;
+    /**
+     * @description sets the page type to sign up
+     */
+    setPageToSignUp = (e) => {
+        e.preventDefault();
+        this.setState({ page: PageTypes.signUp });
+    }
+
+    setPage = (e, page) => {
+        e.preventDefault();
+        this.setState({ page });
+    }
+
+    /**
+     * @description sets auth token
+     */
+    setAuthToken = (authToken) => {
+        this.setState({ authToken, page: authToken === "" ? PageTypes.signIn : PageTypes.signedInMain });
+    }
+
+    /**
+     * @description sets the user
+     */
+    setUser = (user) => {
+        this.setState({ user });
     }
 
     render() {
+        const { page, user } = this.state;
         return (
-            <header>
-                <nav className="navbar">
-                    <span><h1 className="navbar-brand">Plant Tracker</h1></span>
-
-                    <AddPlantModal addPlantCallback={this.addPlantCallback} toggleModal={this.toggleModal} isModalOpen={false}></AddPlantModal>
-                    <SignOut handleSignOutCallback={this.handleSignOutCallback}></SignOut>
-                    
-                </nav>
-            </header>
-        );
-    }
-}
-
-// class Footer extends Component {
-//     render() {
-//         return (
-//             <footer className="page-footer">
-//                 <div>
-//                     <p id="footer">&copy;2021 Eric Gabrielson</p>	
-//                 </div>
-//             </footer>
-//         );
-//     }
-// }
-
-class SignOut extends Component {
-    constructor(props){
-        super(props);
-        this.handleSignOutCallback = this.props.handleSignOutCallback;
-    }
-    render() {
-        return (
-            <Button onClick={this.handleSignOutCallback} type="button" className="btn btn-danger">
-                <NavLink to="/">Sign-out</NavLink>
-            </Button>
+            <div>
+                {user ?
+                    <Main page={page}
+                        setPage={this.setPage}
+                        setAuthToken={this.setAuthToken}
+                        user={user}
+                        setUser={this.setUser} />
+                    :
+                    <Auth page={page}
+                        setPage={this.setPage}
+                        setAuthToken={this.setAuthToken}
+                        setUser={this.setUser} />
+                }
+            </div>
         );
     }
 }
