@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
-//import { Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 export class LoginForm extends Component {
     constructor(props) {
@@ -20,7 +20,7 @@ export class LoginForm extends Component {
 
     handleSignIn = () => {
         this.signInCallback(this.state);
-        // Redirect.to('/list');
+        Redirect.to('/list');
     }
 
     handleChange = (event) => {
