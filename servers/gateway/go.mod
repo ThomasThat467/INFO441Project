@@ -4,6 +4,7 @@ go 1.15
 
 require (
 	github.com/go-redis/redis v6.15.9+incompatible
+	github.com/go-sql-driver/mysql v1.5.0 // indirect
 	github.com/google/go-cmp v0.5.5 // indirect
 	github.com/kr/text v0.2.0 // indirect
 	github.com/onsi/ginkgo v1.15.1 // indirect

@@ -11,16 +11,12 @@ import (
 	"github.com/ThomasThat467/INFO441Project/tree/main/servers/models/plants"
 )
 
-//not sure we need plant context
-type PlantCotext struct {
-	PlantStore plants.Store
-}
-
-func (ctx *PlantCotext) PlantHandler(w http.ResponseWriter, r *http.Request) {
+// PlantHandler ...
+func (ctx *HandlerContext) PlantHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		contentType := r.Header.Get("Content-Type")
 		if contentType != "application/json" {
-			http.Error(w, "Platn request body must be json but got: %d", http.StatusUnsupportedMediaType)
+			http.Error(w, "Plant request body must be json but got: %d", http.StatusUnsupportedMediaType)
 			return
 		} else {
 			responseBody, _ := ioutil.ReadAll(r.Body)
@@ -53,7 +49,8 @@ func (ctx *PlantCotext) PlantHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (ctx *PlantCotext) SpecificPlantHandler(w http.ResponseWriter, r *http.Request) {
+// SpecificPlantHandler ...
+func (ctx *HandlerContext) SpecificPlantHandler(w http.ResponseWriter, r *http.Request) {
 	plantID := strings.TrimPrefix(r.URL.Path, "/v1/plant/")
 	currentPlant := &plants.Plant{}
 
@@ -97,7 +94,7 @@ func (ctx *PlantCotext) SpecificPlantHandler(w http.ResponseWriter, r *http.Requ
 
 		}
 	}
-	//not sure delte part
+	//not sure delete part
 	if r.Method == http.MethodDelete {
 		plantID = strconv.FormatInt(currentPlant.ID, 10)
 		plantintID := currentPlant.ID
@@ -109,13 +106,11 @@ func (ctx *PlantCotext) SpecificPlantHandler(w http.ResponseWriter, r *http.Requ
 			fmt.Printf("Unnaccepted content type. Response body must be in JSON. Code: %d", http.StatusUnsupportedMediaType)
 			return
 		}
-		deletePlant, err := ctx.PlantStore.Delete(plantintID)
+		err := ctx.PlantStore.Delete(plantintID)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusNotFound)
 			return
 		} else {
-			json, _ := json.Marshal(deletePlant)
-			w.Write(json)
 			w.WriteHeader(http.StatusOK)
 			return
 		}

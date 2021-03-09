@@ -4,10 +4,10 @@ import (
 	"errors"
 )
 
-//ErrUserNotFound is returned when the user can't be found
+//ErrPlantNotFound is returned when the user can't be found
 var ErrPlantNotFound = errors.New("plant not found")
 
-//Store represents a store for Users
+//Store represents a store for Plants
 type Store interface {
 	//GetByID returns the Plant with the given ID
 	GetByID(id int64) (*Plant, error)
@@ -25,7 +25,5 @@ type Store interface {
 
 	//Delete deletes the plant with the given ID
 	//Delete(id int64) error
-
-	// Jisu changes to this
-	Delete(id int64) (*Plant, error)
+	Delete(id int64) error
 }
