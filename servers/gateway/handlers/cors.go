@@ -13,6 +13,7 @@ with the following headers to all requests:
   Access-Control-Max-Age: 600
 */
 
+// CorsHandler ...
 type CorsHandler struct {
 	Handler http.Handler
 }
@@ -27,6 +28,7 @@ func (cors *CorsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
+//NewCorsHandler ...
 func NewCorsHandler(handlerToWrap http.Handler) http.Handler {
 	return &CorsHandler{handlerToWrap}
 }

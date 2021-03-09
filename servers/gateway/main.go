@@ -8,6 +8,8 @@ import (
 	"os"
 	"time"
 
+	_ "github.com/go-sql-driver/mysql"
+
 	"github.com/ThomasThat467/INFO441Project/tree/main/servers/handlers"
 	"github.com/ThomasThat467/INFO441Project/tree/main/servers/models/users"
 	"github.com/ThomasThat467/INFO441Project/tree/main/servers/sessions"
@@ -49,6 +51,7 @@ func main() {
 	ctx := handlers.NewHandlerContext(sessionKey, sessionStore, sql)
 
 	mux := http.NewServeMux()
+	corsmux := handlers.NewCorsHandler(mux)
 
 	mux.HandleFunc("/v1/users", ctx.UsersHandler)
 	mux.HandleFunc("/v1/users/", ctx.SpecificUserHandler)
@@ -56,5 +59,5 @@ func main() {
 	mux.HandleFunc("/v1/sessions/", ctx.SpecificSessionHandler)
 
 	log.Printf("Server is listening at %s", addr)
-	log.Fatal(http.ListenAndServeTLS(addr, tlsCertPath, tlsKeyPath, mux))
+	log.Fatal(http.ListenAndServeTLS(addr, tlsCertPath, tlsKeyPath, corsmux))
 }
