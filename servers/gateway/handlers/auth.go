@@ -20,6 +20,7 @@ import (
 //struct as the receiver on these functions so that you have
 //access to things like the session store and user store.
 
+// UsersHandler ...
 func (ctx *HandlerContext) UsersHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		contentType := r.Header.Get("Content-Type")
@@ -72,6 +73,9 @@ func (ctx *HandlerContext) UsersHandler(w http.ResponseWriter, r *http.Request) 
 			w.Write(addedUser)
 			return
 		}
+	} else if r.Method == http.MethodOptions {
+		//testing to get around preflight cors
+		return
 	} else {
 		//println("big else statement")
 		http.Error(w, "Method not allowed %d", http.StatusMethodNotAllowed)
@@ -79,6 +83,7 @@ func (ctx *HandlerContext) UsersHandler(w http.ResponseWriter, r *http.Request) 
 	}
 }
 
+// SpecificUserHandler ...
 func (ctx *HandlerContext) SpecificUserHandler(w http.ResponseWriter, r *http.Request) {
 	userID := strings.TrimPrefix(r.URL.Path, "/v1/users/")
 	currentUser := &users.User{}
@@ -151,9 +156,13 @@ func (ctx *HandlerContext) SpecificUserHandler(w http.ResponseWriter, r *http.Re
 		w.WriteHeader(http.StatusOK)
 		return
 
+	} else if r.Method == http.MethodOptions {
+		//testing to get around preflight cors
+		return
 	}
 }
 
+// SessionsHandler ...
 func (ctx *HandlerContext) SessionsHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		contentType := r.Header.Get("Content-Type")
@@ -202,14 +211,18 @@ func (ctx *HandlerContext) SessionsHandler(w http.ResponseWriter, r *http.Reques
 				w.Write(marshaled)
 			}
 		}
+	} else if r.Method == http.MethodOptions {
+		//testing to get around preflight cors
+		return
 	} else {
 		//println("in big else")
 		w.WriteHeader(http.StatusMethodNotAllowed)
-		fmt.Printf("Status method not allowed. Code: %d \n", http.StatusMethodNotAllowed)
+		fmt.Printf("SessionsHandler - Status method not allowed. Code: %d \n", http.StatusMethodNotAllowed)
 		return
 	}
 }
 
+// SpecificSessionHandler ...
 func (ctx *HandlerContext) SpecificSessionHandler(w http.ResponseWriter, r *http.Request) {
 	mine := strings.TrimPrefix(r.URL.Path, "/v1/sessions/")
 	if r.Method == http.MethodDelete {
@@ -226,8 +239,11 @@ func (ctx *HandlerContext) SpecificSessionHandler(w http.ResponseWriter, r *http
 				w.Write([]byte("Signed out"))
 			}
 		}
+	} else if r.Method == http.MethodOptions {
+		//testing to get around preflight cors
+		return
 	} else {
-		fmt.Printf("Status method not allowed. Code: %d \n", http.StatusMethodNotAllowed)
+		fmt.Printf("SpecificSessionHandler - Status method not allowed. Code: %d \n", http.StatusMethodNotAllowed)
 		w.WriteHeader(http.StatusMethodNotAllowed)
 	}
 

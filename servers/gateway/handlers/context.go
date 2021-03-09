@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"github.com/ThomasThat467/INFO441Project/tree/main/servers/models/plants"
 	"github.com/ThomasThat467/INFO441Project/tree/main/servers/models/users"
 	"github.com/ThomasThat467/INFO441Project/tree/main/servers/sessions"
 )
@@ -12,17 +13,21 @@ import (
 //and verifying SessionIDs, the session store
 //and the user store
 
+// HandlerContext ...
 type HandlerContext struct {
 	SigningKey   string
 	SessionStore sessions.Store
 	UserStore    users.Store
+	PlantStore   plants.Store
 }
 
-func NewHandlerContext(signingKey string, sessionStore sessions.Store, userStore users.Store) *HandlerContext {
+// NewHandlerContext ...
+func NewHandlerContext(signingKey string, sessionStore sessions.Store, userStore users.Store, plantStore plants.Store) *HandlerContext {
 
 	return &HandlerContext{
 		SigningKey:   signingKey,
 		SessionStore: sessionStore,
 		UserStore:    userStore,
+		PlantStore:   plantStore,
 	}
 }
