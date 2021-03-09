@@ -24,5 +24,8 @@ type Store interface {
 	Update(id int64, updates *Updates) (*Plant, error)
 
 	//Delete deletes the plant with the given ID
-	Delete(id int64) error
+	//Delete(id int64) error
+
+	// Jisu changes to this
+	Delete(id int64) (*Plant, error)
 }
