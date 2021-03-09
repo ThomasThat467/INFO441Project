@@ -81,8 +81,8 @@ func (ctx *PlantCotext) SpecificPlantHandler(w http.ResponseWriter, r *http.Requ
 				fmt.Printf("Unnaccepted content type. Response body must be in JSON. Code: %d", http.StatusUnsupportedMediaType)
 				return
 			}
-			var updatesPlantInfo plants.Updates
 			marshaled, err := ioutil.ReadAll(r.Body)
+			var updatesPlantInfo plants.Updates
 			if err == nil {
 				json.Unmarshal([]byte(marshaled), &updatesPlantInfo)
 			}
