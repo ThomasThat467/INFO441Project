@@ -4,6 +4,7 @@ import (
 	"database/sql"
 
 	_ "github.com/go-sql-driver/mysql"
+	"fmt"
 )
 
 // GetByType is an enumerate for GetBy* functions implemented
@@ -95,19 +96,6 @@ func (ms *MySQLStore) Insert(user *User) (*User, error) {
 	return user, nil
 }
 
-//InsertUserLog inserts a log of a successful user login attempt
-func (ms *MySQLStore) InsertUserLog(userLog *UserLog) (*UserLog, error) {
-	ins := "insert into UserLogs(UserID, StartAt, IPAddress) values (?,?,?)"
-	res, err := ms.Database.Exec(ins, userLog.ID, userLog.StartAt, userLog.IPAddress)
-	if err != nil {
-		return nil, err
-	}
-
-	res.LastInsertId()
-
-	return userLog, nil
-}
-
 //Update applies UserUpdates to the given user ID
 //and returns the newly-updated user
 func (ms *MySQLStore) Update(id int64, updates *Updates) (*User, error) {
@@ -149,4 +137,19 @@ func (ms *MySQLStore) Delete(id int64) error {
 	}
 
 	return nil
+}
+
+type SignIn struct {
+	ID         int64
+	UserID     int64
+	SignInTime string
+	IP         string
+}
+
+func (sql *MySQLStore) InsertSignedIn(signin *SignIn) (*SignIn, error) {
+	_, err := sql.Database.Exec("insert into SignIns", signin.UserID, signin.SignInTime, signin.IP)
+	if err != nil {
+		fmt.Printf("response error: %v", err)
+	}
+	return signin, nil
 }

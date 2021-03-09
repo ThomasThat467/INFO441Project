@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Errors from '../../../Errors/Errors';
-import api from '../../../../Constants/APIEndpoints/APIEndpoints';
-import PageTypes from '../../../../Constants/PageTypes/PageTypes';
+import api from '../../../../Constants/APIEndpoints';
+import PageTypes from '../../../../Constants/PageTypes';
 
 class ForgotPassword extends Component {
     constructor(props) {

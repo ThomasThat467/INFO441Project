@@ -1,9 +1,20 @@
 package main
 
 import (
+	"database/sql"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
+	"time"
+
+	_ "github.com/go-sql-driver/mysql"
+
+	"github.com/ThomasThat467/INFO441Project/tree/main/servers/handlers"
+	"github.com/ThomasThat467/INFO441Project/tree/main/servers/models/plants"
+	"github.com/ThomasThat467/INFO441Project/tree/main/servers/models/users"
+	"github.com/ThomasThat467/INFO441Project/tree/main/servers/sessions"
+	"github.com/go-redis/redis"
 )
 
 func main() {
@@ -28,19 +39,28 @@ func main() {
 	if len(dsn) == 0 {
 		log.Fatalf("DSN is not set")
 	}
-	// db, err := sql.Open("mysql", dsn)
-	// if err != nil {
-	// 	fmt.Printf("Error opening DB: %v", err)
-	// }
+	db, err := sql.Open("mysql", dsn)
+	if err != nil {
+		fmt.Printf("Error opening DB: %v", err)
+	}
 
-	// redi := redis.NewClient(&redis.Options{
-	// 	Addr: redisAddr,
-	// })
-	//sessionStore := sessions.NewRedisStore(redi, time.Hour)
-	//sql := &users.MySQLStore{Database: db}
+	redi := redis.NewClient(&redis.Options{
+		Addr: redisAddr,
+	})
+	sessionStore := sessions.NewRedisStore(redi, time.Hour)
+	userStore := &users.MySQLStore{Database: db}
+	plantStore := &plants.MySQLStore{Database: db}
+	ctx := handlers.NewHandlerContext(sessionKey, sessionStore, userStore, plantStore)
 
 	mux := http.NewServeMux()
+	corsmux := handlers.NewCorsHandler(mux)
+
+	mux.HandleFunc("/v1/users", ctx.UsersHandler)
+	mux.HandleFunc("/v1/users/", ctx.SpecificUserHandler)
+	mux.HandleFunc("/v1/sessions", ctx.SessionsHandler)
+	mux.HandleFunc("/v1/sessions/", ctx.SpecificSessionHandler)
+	mux.HandleFunc("/v1/plant", ctx.PlantHandler)
 
 	log.Printf("Server is listening at %s", addr)
-	log.Fatal(http.ListenAndServeTLS(addr, tlsCertPath, tlsKeyPath, mux))
+	log.Fatal(http.ListenAndServeTLS(addr, tlsCertPath, tlsKeyPath, corsmux))
 }
