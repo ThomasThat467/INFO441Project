@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"github.com/ThomasThat467/INFO441Project/tree/main/servers/models/plants"
+	"github.com/ThomasThat467/INFO441Project/tree/main/servers/models/schedules"
 	"github.com/ThomasThat467/INFO441Project/tree/main/servers/models/users"
 	"github.com/ThomasThat467/INFO441Project/tree/main/servers/sessions"
 )
@@ -15,19 +16,21 @@ import (
 
 // HandlerContext ...
 type HandlerContext struct {
-	SigningKey   string
-	SessionStore sessions.Store
-	UserStore    users.Store
-	PlantStore   plants.Store
+	SigningKey    string
+	SessionStore  sessions.Store
+	UserStore     users.Store
+	PlantStore    plants.Store
+	ScheduleStore schedules.Store
 }
 
 // NewHandlerContext ...
-func NewHandlerContext(signingKey string, sessionStore sessions.Store, userStore users.Store, plantStore plants.Store) *HandlerContext {
+func NewHandlerContext(signingKey string, sessionStore sessions.Store, userStore users.Store, plantStore plants.Store, scheduleStore schedules.Store) *HandlerContext {
 
 	return &HandlerContext{
-		SigningKey:   signingKey,
-		SessionStore: sessionStore,
-		UserStore:    userStore,
-		PlantStore:   plantStore,
+		SigningKey:    signingKey,
+		SessionStore:  sessionStore,
+		UserStore:     userStore,
+		PlantStore:    plantStore,
+		ScheduleStore: scheduleStore,
 	}
 }
