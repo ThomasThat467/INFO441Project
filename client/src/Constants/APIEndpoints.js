@@ -5,7 +5,7 @@ export default {
         users: "/v1/users",
         myuser: "/v1/users/me",
         myplants: "/v1/plant/me",
-        myuserAvatar: "/v1/users/me/avatar",
+        myuserPlant: "/v1/users/me/plant",
         sessions: "/v1/sessions",
         sessionsMine: "/v1/sessions/mine",
         resetPasscode: "/v1/resetcodes",
