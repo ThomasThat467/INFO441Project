@@ -1,13 +1,5 @@
-FROM node:12.18.3
-
-WORKDIR /app
-
-COPY ["package.json", "package-lock.json", "./"]
-
-RUN npm install --production
-
-COPY . .
-
-EXPOSE 3000
-
-CMD ["npm", "start"]
+FROM nginx
+ADD default.conf /etc/nginx/conf.d/default.conf
+COPY build /usr/share/nginx/html
+EXPOSE 80
+EXPOSE 443
