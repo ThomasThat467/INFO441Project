@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"net/mail"
 	"strings"
-	"time"
 
 	"golang.org/x/crypto/bcrypt"
 )

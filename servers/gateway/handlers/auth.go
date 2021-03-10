@@ -2,9 +2,8 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
-	"io/ioutil"
 	"net/http"
+	"path"
 	"strconv"
 	"strings"
 	"time"
@@ -44,10 +43,10 @@ func (context *HandlerContext) UsersHandler(w http.ResponseWriter, r *http.Reque
 			return
 		}
 		newSession := &SessionState{
-			Time: time.Now(),
-			User: *user,
+			SessionTime: time.Now(),
+			SessionUser: *user,
 		}
-		_, err = sessions.BeginSession(context.SignKey, context.SessionStore, newSession, w)
+		_, err = sessions.BeginSession(context.SigningKey, context.SessionStore, newSession, w)
 		if err != nil {
 			http.Error(w, "Error beginning session\n"+err.Error(), http.StatusInternalServerError)
 			return
@@ -69,7 +68,7 @@ func (context *HandlerContext) UsersHandler(w http.ResponseWriter, r *http.Reque
 // SpecificUserHandler handles requests for a specific user
 func (context *HandlerContext) SpecificUserHandler(w http.ResponseWriter, r *http.Request) {
 	currSess := &SessionState{}
-	_, err := sessions.GetState(r, context.SignKey, context.SessionStore, currSess)
+	_, err := sessions.GetState(r, context.SigningKey, context.SessionStore, currSess)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusUnauthorized)
 		return
@@ -77,7 +76,7 @@ func (context *HandlerContext) SpecificUserHandler(w http.ResponseWriter, r *htt
 	if r.Method == "GET" {
 		var userID int64
 		if path.Base(r.URL.Path) == "me" {
-			userID = int64(currSess.User.ID)
+			userID = int64(currSess.SessionUser.ID)
 		} else {
 			lastPath, err := strconv.Atoi(path.Base(r.URL.Path))
 			if err != nil {
@@ -103,7 +102,7 @@ func (context *HandlerContext) SpecificUserHandler(w http.ResponseWriter, r *htt
 		lastPath := path.Base(r.URL.Path)
 		if lastPath != "me" {
 			userID, err := strconv.Atoi(lastPath)
-			if err != nil || int64(userID) != currSess.User.ID {
+			if err != nil || int64(userID) != currSess.SessionUser.ID {
 				http.Error(w, "Cannot request this user ID", http.StatusForbidden)
 				return
 			}
@@ -118,12 +117,12 @@ func (context *HandlerContext) SpecificUserHandler(w http.ResponseWriter, r *htt
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
-		user, err := context.UserStore.Update(currSess.User.ID, updates)
+		user, err := context.UserStore.Update(currSess.SessionUser.ID, updates)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
-		currSess.User = *user
+		currSess.SessionUser = *user
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		resBody, err := json.Marshal(user)
@@ -161,27 +160,11 @@ func (context *HandlerContext) SessionsHandler(w http.ResponseWriter, r *http.Re
 			http.Error(w, err.Error(), http.StatusUnauthorized)
 			return
 		}
-		ip := r.Header.Get("X-FORWARDED-FOR")
-		if ip != "" {
-			ip = strings.Split(ip, ", ")[0]
-		} else {
-			ip = r.RemoteAddr
-		}
-		userLog := &users.UserLog{
-			ID:        user.ID,
-			StartAt:   time.Now(),
-			IPAddress: ip,
-		}
-		_, err = context.UserStore.InsertUserLog(userLog)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
 		sessionState := &SessionState{
-			Time: time.Now(),
-			User: *user,
+			SessionTime: time.Now(),
+			SessionUser: *user,
 		}
-		_, err = sessions.BeginSession(context.SignKey, context.SessionStore, sessionState, w)
+		_, err = sessions.BeginSession(context.SigningKey, context.SessionStore, sessionState, w)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -207,7 +190,7 @@ func (context *HandlerContext) SpecificSessionHandler(w http.ResponseWriter, r *
 			http.Error(w, "Cannot end a session that isn't yours", http.StatusForbidden)
 			return
 		}
-		_, err := sessions.EndSession(r, context.SignKey, context.SessionStore)
+		_, err := sessions.EndSession(r, context.SigningKey, context.SessionStore)
 		if err != nil {
 			http.Error(w, "Error ending this session", http.StatusForbidden)
 			return
