@@ -1,27 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import PageTypes from '../../../../Constants/PageTypes';
 import api from '../../../../Constants/APIEndpoints';
-//import {PlantList} from './PlantList.js'
+import {PlantList} from '../../Components/PlantList.js'
 import {AddPlantModal} from '../../Components/AddPlant.js'
 
-const MainPageContent = ({ user, setPage }) => {
-    //const [avatar, setAvatar] = useState(null)
-
-    // async function fetchAvatar() {
-    //     const response = await fetch(api.base + api.handlers.myuserAvatar, {
-    //         method: "GET",
-    //         headers: new Headers({
-    //             "Authorization": localStorage.getItem("Authorization")
-    //         })
-    //     });
-    //     if (response.status >= 300) {
-    //         // const error = await response.text();
-    //         setAvatar(user.photoURL)
-    //         return;
-    //     }
-    //     const imgBlob = await response.blob();
-    //     setAvatar(URL.createObjectURL(imgBlob));
-    // }
+const MainPageContent = ({ user, plants, setPage }) => {
+    const [avatar, setAvatar] = useState(null)
+    
+    async function fetchAvatar() {
+        const response = await fetch(api.base + api.handlers.myuserAvatar, {
+            method: "GET",
+            headers: new Headers({
+                "Authorization": localStorage.getItem("Authorization")
+            })
+        });
+        if (response.status >= 300) {
+            // const error = await response.text();
+            setAvatar(user.photoURL)
+            return;
+        }
+        const imgBlob = await response.blob();
+        setAvatar(URL.createObjectURL(imgBlob));
+    }
 
     // useEffect(() => {
     //     fetchAvatar();
@@ -34,7 +34,12 @@ const MainPageContent = ({ user, setPage }) => {
           <span><h1 className="navbar-brand">Plant Tracker</h1></span>
         </nav>
       </header>
+<<<<<<< HEAD
 
+=======
+      
+      <PlantList plants={plants}/>
+>>>>>>> 159076d4fa0e355e15781a01037b876535244a64
       {/* <AddPlantModal addPlantCallback={this.addPlantCallback} toggleModal={this.toggleModal} isModalOpen={false}></AddPlantModal> */}
 
       {/* {avatar && <img className={"avatar"} src={avatar} alt={`${user.firstName}'s avatar`} />} */}

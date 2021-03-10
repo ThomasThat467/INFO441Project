@@ -12,21 +12,21 @@ const gravatarBasePhotoURL = "https://www.gravatar.com/avatar/"
 
 type Plant struct {
 	ID               int64  `json:"id"`
-	Species          string `json:"userName"`
-	WateringSchedule string `json:"photoURL"`
+	Species          string `json:"species"`
+	WateringSchedule string `json:"schedule"`
 	PhotoURL         string `json:"photoURL"`
 }
 
 //Updates represents allowed updates to a plant
 type Updates struct {
-	WateringSchedule string `json:"photoURL"`
+	WateringSchedule string `json:"schedule"`
 	PhotoURL         string `json:"photoURL"`
 }
 
 //NewPlant represents a new plant that added by a user
 type NewPlant struct {
-	Species          string `json:"userName"`
-	WateringSchedule string `json:"photoURL"`
+	Species          string `json:"species"`
+	WateringSchedule string `json:"schedule"`
 	PhotoURL         string `json:"photoURL"`
 }
 
@@ -45,8 +45,8 @@ func (np *NewPlant) ToPlant() (*Plant, error) {
 
 // GetGravitar calculates the gravitar hash based on the string given and
 // stores it for the plant  -- copy from user.go
-func GetGravitar(user *Plant, str string) {
+func GetGravitar(plant *Plant, str string) {
 	photoURLHash := md5.Sum([]byte(strings.ToLower(strings.TrimSpace(str))))
 	photoURLHashString := hex.EncodeToString(photoURLHash[:])
-	user.PhotoURL = gravatarBasePhotoURL + photoURLHashString
+	plant.PhotoURL = gravatarBasePhotoURL + photoURLHashString
 }
