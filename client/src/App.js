@@ -79,6 +79,7 @@ class App extends Component {
 
     render() {
         const { page, user } = this.state;
+        console.log(user)
         return (
             <div>
                 {user ?

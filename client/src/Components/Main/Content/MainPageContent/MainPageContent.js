@@ -5,28 +5,28 @@ import api from '../../../../Constants/APIEndpoints';
 import {AddPlantModal} from '../../Components/AddPlant.js'
 
 const MainPageContent = ({ user, setPage }) => {
-    const [avatar, setAvatar] = useState(null)
+    //const [avatar, setAvatar] = useState(null)
 
-    async function fetchAvatar() {
-        const response = await fetch(api.base + api.handlers.myuserAvatar, {
-            method: "GET",
-            headers: new Headers({
-                "Authorization": localStorage.getItem("Authorization")
-            })
-        });
-        if (response.status >= 300) {
-            // const error = await response.text();
-            setAvatar(user.photoURL)
-            return;
-        }
-        const imgBlob = await response.blob();
-        setAvatar(URL.createObjectURL(imgBlob));
-    }
+    // async function fetchAvatar() {
+    //     const response = await fetch(api.base + api.handlers.myuserAvatar, {
+    //         method: "GET",
+    //         headers: new Headers({
+    //             "Authorization": localStorage.getItem("Authorization")
+    //         })
+    //     });
+    //     if (response.status >= 300) {
+    //         // const error = await response.text();
+    //         setAvatar(user.photoURL)
+    //         return;
+    //     }
+    //     const imgBlob = await response.blob();
+    //     setAvatar(URL.createObjectURL(imgBlob));
+    // }
 
-    useEffect(() => {
-        fetchAvatar();
-        return;
-    }, []);
+    // useEffect(() => {
+    //     fetchAvatar();
+    //     return;
+    // }, []);
 
     return <>
       <header>
@@ -37,7 +37,7 @@ const MainPageContent = ({ user, setPage }) => {
 
       <AddPlantModal addPlantCallback={this.addPlantCallback} toggleModal={this.toggleModal} isModalOpen={false}></AddPlantModal>
 
-      {avatar && <img className={"avatar"} src={avatar} alt={`${user.firstName}'s avatar`} />}
+      {/* {avatar && <img className={"avatar"} src={avatar} alt={`${user.firstName}'s avatar`} />} */}
       <div><button onClick={(e) => { setPage(e, PageTypes.signedInAddedPlant) }}>Add Plant</button></div>
 
     </>
