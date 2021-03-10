@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
 import {WateringSchedule} from './WateringSchedule.js'
 
-export class AddPlantModal extends Component {
+
+export class AddPlant extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,20 +22,22 @@ export class AddPlantModal extends Component {
         this.setState({isModalOpen: !this.state.isModalOpen});
     }
 
-    addPlant() {
-        //let newPlant = {plantName: this.state.plantName, wateringSchedule: this.state.wateringSchedule, lastWatered: '', img: this.state.img}
-        //plantsRef.push(newPlant);
+    // plantRefs = call to database
 
-        // plantsRef.on('value', (snapshot) => {
-        //     let plants = snapshot.val();
-        //     this.setState({plants: plants})
-        // });
-        this.toggleModal();
-    }
+    // addPlant() {
+    //     let newPlant = {plantName: this.state.plantName, wateringSchedule: this.state.wateringSchedule, lastWatered: '', img: this.state.img}
+    //     // plantsRef.push(newPlant);
+
+    //     // plantsRef.on('value', (snapshot) => {
+    //     //     let plants = snapshot.val();
+    //     //     this.setState({plants: plants})
+    //     // });
+    //     this.toggleModal();
+    // }
 
     handleWateringSchedule = (schedule) => {
         console.log("handleWateringScheduleCalled", schedule);
-        //this.state.wateringSchedule = schedule;
+        this.setState({wateringSchedule: schedule});
     }
 
     handleChange = (event) => {

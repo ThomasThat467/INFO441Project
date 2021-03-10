@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import PageTypes from '../../../../Constants/PageTypes';
 import api from '../../../../Constants/APIEndpoints';
-//import {PlantList} from './PlantList.js'
-import {AddPlantModal} from '../../Components/AddPlant.js'
+import {PlantList} from '../../Components/PlantList.js'
 
-const MainPageContent = ({ user, setPage }) => {
-    const [avatar, setAvatar] = useState(null)
 
-    async function fetchAvatar() {
-        const response = await fetch(api.base + api.handlers.myuserAvatar, {
+const MainPageContent = ({ user, plants, setPage }) => {
+    const [plant, newPlant] = useState(null)
+    
+    async function fetchPlant() {
+        const response = await fetch(api.base + api.handlers.myuserPlant, {
             method: "GET",
             headers: new Headers({
                 "Authorization": localStorage.getItem("Authorization")
@@ -16,15 +16,18 @@ const MainPageContent = ({ user, setPage }) => {
         });
         if (response.status >= 300) {
             // const error = await response.text();
-            setAvatar(user.photoURL)
+            //Probably need to take in more information so it can add the watering schedule?
+            newPlant(user.photoURL)
             return;
         }
+
+        //not sure what this blob thing is
         const imgBlob = await response.blob();
-        setAvatar(URL.createObjectURL(imgBlob));
+        newPlant(URL.createObjectURL(imgBlob));
     }
 
     useEffect(() => {
-        fetchAvatar();
+        fetchPlant();
         return;
     }, []);
 
@@ -34,36 +37,13 @@ const MainPageContent = ({ user, setPage }) => {
           <span><h1 className="navbar-brand">Plant Tracker</h1></span>
         </nav>
       </header>
+      <PlantList plants={plants}/>
 
-      <AddPlantModal addPlantCallback={this.addPlantCallback} toggleModal={this.toggleModal} isModalOpen={false}></AddPlantModal>
-
-      {avatar && <img className={"avatar"} src={avatar} alt={`${user.firstName}'s avatar`} />}
+      {plant && <img className={"avatar"} src={plant} alt={`${user.firstName}'s new plant`} />}
       <div><button onClick={(e) => { setPage(e, PageTypes.signedInAddedPlant) }}>Add Plant</button></div>
 
     </>
 }
-
-// class Header extends Component {
-//     constructor(props){
-//         super(props);
-//         this.addPlantCallback = this.props.addPlantCallback;
-//         this.handleSignOutCallback = this.props.handleSignOutCallback;
-//     }
-
-//     render() {
-//         return (
-//             <header>
-//                 <nav className="navbar">
-//                     <span><h1 className="navbar-brand">Plant Tracker</h1></span>
-
-//                     <AddPlantModal addPlantCallback={this.addPlantCallback} toggleModal={this.toggleModal} isModalOpen={false}></AddPlantModal>
-//                     <SignOut handleSignOutCallback={this.handleSignOutCallback}></SignOut>
-                    
-//                 </nav>
-//             </header>
-//         );
-//     }
-// }
 
 
 export default MainPageContent;
