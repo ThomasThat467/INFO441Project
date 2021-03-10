@@ -35,7 +35,7 @@ const MainPageContent = ({ user, setPage }) => {
         </nav>
       </header>
 
-      <AddPlantModal addPlantCallback={this.addPlantCallback} toggleModal={this.toggleModal} isModalOpen={false}></AddPlantModal>
+      {/*<AddPlantModal addPlantCallback={this.addPlantCallback} toggleModal={this.toggleModal} isModalOpen={false}></AddPlantModal>*/}
 
       {avatar && <img className={"avatar"} src={avatar} alt={`${user.firstName}'s avatar`} />}
       <div><button onClick={(e) => { setPage(e, PageTypes.signedInAddedPlant) }}>Add Plant</button></div>
