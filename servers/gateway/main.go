@@ -62,7 +62,9 @@ func main() {
 	mux.HandleFunc("/v1/sessions", ctx.SessionsHandler)
 	mux.HandleFunc("/v1/sessions/", ctx.SpecificSessionHandler)
 	mux.HandleFunc("/v1/plant", ctx.PlantHandler)
+	mux.HandleFunc("/v1/plant/", ctx.SpecificPlantHandler)
 	mux.HandleFunc("/v1/schedule", ctx.ScheduleHandler)
+	mux.HandleFunc("/v1/schedule/", ctx.SpecificScheduleHandler)
 
 	log.Printf("Server is listening at %s", addr)
 	log.Fatal(http.ListenAndServeTLS(addr, tlsCertPath, tlsKeyPath, corsmux))
