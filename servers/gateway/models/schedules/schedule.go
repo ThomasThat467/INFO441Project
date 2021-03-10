@@ -2,21 +2,21 @@ package schedules
 
 //gravatarBasePhotoURL is the base URL for Gravatar image requests.
 //See https://id.gravatar.com/site/implement/images/ for details
-const gravatarBasePhotoURL = "https://www.gravatar.com/avatar/"
+//const gravatarBasePhotoURL = "https://www.gravatar.com/avatar/"
 
 type Schedule struct {
 	ID               int64  `json:"id"`
-	WateringSchedule string `json:"photoURL"`
+	WateringSchedule string `json:"schedule"`
 }
 
 //Updates represents allowed updates to a schedule
 type Updates struct {
-	WateringSchedule string `json:"photoURL"`
+	WateringSchedule string `json:"schedule"`
 }
 
 //NewPlant represents a new plant that added by a user
 type NewSchedule struct {
-	WateringSchedule string `json:"photoURL"`
+	WateringSchedule string `json:"schedule"`
 }
 
 //ToUser converts the NewUser to a User, setting the
