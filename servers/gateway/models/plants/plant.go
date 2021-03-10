@@ -45,8 +45,8 @@ func (np *NewPlant) ToPlant() (*Plant, error) {
 
 // GetGravitar calculates the gravitar hash based on the string given and
 // stores it for the plant  -- copy from user.go
-func GetGravitar(user *Plant, str string) {
+func GetGravitar(plant *Plant, str string) {
 	photoURLHash := md5.Sum([]byte(strings.ToLower(strings.TrimSpace(str))))
 	photoURLHashString := hex.EncodeToString(photoURLHash[:])
-	user.PhotoURL = gravatarBasePhotoURL + photoURLHashString
+	plant.PhotoURL = gravatarBasePhotoURL + photoURLHashString
 }

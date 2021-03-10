@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PageTypes from '../../../../Constants/PageTypes';
 import api from '../../../../Constants/APIEndpoints';
-//import {PlantList} from './PlantList.js'
+import {PlantList} from '../../Components/PlantList.js'
 import {AddPlantModal} from '../../Components/AddPlant.js'
 
-const MainPageContent = ({ user, setPage }) => {
+const MainPageContent = ({ user, plants, setPage }) => {
     const [avatar, setAvatar] = useState(null)
 
     async function fetchAvatar() {
@@ -34,8 +34,9 @@ const MainPageContent = ({ user, setPage }) => {
           <span><h1 className="navbar-brand">Plant Tracker</h1></span>
         </nav>
       </header>
-
-      <AddPlantModal addPlantCallback={this.addPlantCallback} toggleModal={this.toggleModal} isModalOpen={false}></AddPlantModal>
+      
+      {/* <PlantList plants={this.state.plants}/> */}
+      {/* <AddPlantModal addPlantCallback={this.addPlantCallback} toggleModal={this.toggleModal} isModalOpen={false}></AddPlantModal> */}
 
       {avatar && <img className={"avatar"} src={avatar} alt={`${user.firstName}'s avatar`} />}
       <div><button onClick={(e) => { setPage(e, PageTypes.signedInAddedPlant) }}>Add Plant</button></div>
