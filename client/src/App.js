@@ -11,10 +11,21 @@ class App extends Component {
         this.state = {
             page: localStorage.getItem("Authorization") ? PageTypes.signedInMain : PageTypes.signIn,
             authToken: localStorage.getItem("Authorization") || null,
-            user: null
+            user: null,
+            plants: []
         }
 
         this.getCurrentUser()
+    }
+    componentDidMount() {
+        fetch('data/inventory.json')
+        .then( (response) => {
+            return response.json();
+        })
+        .then( (data) => {
+            this.setState({plants: data.plantInventory})
+        })
+
     }
 
 
@@ -41,6 +52,30 @@ class App extends Component {
         this.setUser(user);
 
     }
+
+    /**
+     * @description Gets the plants
+     */
+         getCurrentPlants = async () => {
+            if (!this.state.authToken) {
+                return;
+            }
+            const response = await fetch(api.base + api.handlers.myplants, {
+                headers: new Headers({
+                    "Authorization": this.state.authToken
+                })
+            });
+            if (response.status >= 300) {
+                alert("Unable to retrieve plants...");
+                // localStorage.setItem("Authorization", "");
+                // this.setAuthToken("");
+                // this.setUser(null)
+                return;
+            }
+            const plants = await response.json()
+            this.setPlants(plants);
+    
+        }
 
     /**
      * @description sets the page type to sign in
@@ -77,9 +112,15 @@ class App extends Component {
         this.setState({ user });
     }
 
+    /**
+     * @description sets the plants
+     */
+     setPlants = (plants) => {
+        this.setState({ plants });
+    }
+
     render() {
-        const { page, user } = this.state;
-        console.log(user)
+        const { page, user, plants } = this.state;
         return (
             <div>
                 {user ?
@@ -87,7 +128,9 @@ class App extends Component {
                         setPage={this.setPage}
                         setAuthToken={this.setAuthToken}
                         user={user}
-                        setUser={this.setUser} />
+                        setUser={this.setUser}
+                        plants={plants}
+                        setPlants={this.setPlants} />
                     :
                     <Auth page={page}
                         setPage={this.setPage}
