@@ -24,10 +24,11 @@ export class PlantList extends Component {
     
     render() {
         
-        // console.log(this.state.plants);
-        let plantList = this.state.plants.map((plant) => {
+        console.log(this.props.plants);
+        let plantList = this.props.plants.map((plant) => {
             return <PlantCard  key={plant.plantName} plant={plant}></PlantCard>
         })
+        console.log(plantList)
         return (
             <div className="row" id="inventory">{plantList}</div>
         );
