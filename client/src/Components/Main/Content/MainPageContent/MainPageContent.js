@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import PageTypes from '../../../../Constants/PageTypes';
 import api from '../../../../Constants/APIEndpoints';
 import {PlantList} from '../../Components/PlantList.js'
+import {AddPlantModal} from '../../Components/AddPlant.js'
 
 
-const MainPageContent = ({ user, plants, setPage }) => {
+const MainPageContent = ({ user, plants, setPage, addPlantCallback, toggleModal }) => {
     const [plant, newPlant] = useState(null)
     
     async function fetchPlant() {
@@ -35,6 +36,7 @@ const MainPageContent = ({ user, plants, setPage }) => {
       <header>
         <nav className="navbar">
           <span><h1 className="navbar-brand">Plant Tracker</h1></span>
+          <AddPlantModal addPlantCallback={addPlantCallback} toggleModal={toggleModal} isModalOpen={false}></AddPlantModal>
         </nav>
       </header>
       <PlantList plants={plants}/>

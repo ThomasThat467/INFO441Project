@@ -5,6 +5,7 @@ import Main from './Components/Main/Main';
 import './Styles/App.css';
 import api from './Constants/APIEndpoints';
 
+
 class App extends Component {
     constructor() {
         super();
@@ -12,7 +13,8 @@ class App extends Component {
             page: localStorage.getItem("Authorization") ? PageTypes.signedInMain : PageTypes.signIn,
             authToken: localStorage.getItem("Authorization") || null,
             user: null,
-            plants: []
+            plants: [],
+            isModalOpen: false
         }
 
         this.getCurrentUser()

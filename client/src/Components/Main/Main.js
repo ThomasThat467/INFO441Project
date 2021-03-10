@@ -4,12 +4,12 @@ import MainPageContent from './Content/MainPageContent/MainPageContent';
 import SignOutButton from './Components/SignOutButton/SignOutButton';
 import UpdateName from './Components/UpdateName/UpdateName';
 
-const Main = ({ page, setPage, setAuthToken, plants, setUser, user, setPlants }) => {
+const Main = ({ page, setPage, setAuthToken, plants, setUser, user, setPlants, addPlantCallback, toggleModal }) => {
     let content;
     let contentPage = true;
     switch (page) {
         case PageTypes.signedInMain:
-            content = <MainPageContent user={user} setPage={setPage} plants={plants} setPlants={setPlants}/>;
+            content = <MainPageContent user={user} setPage={setPage} plants={plants} setPlants={setPlants} addPlantCallback={addPlantCallback} toggleModal={toggleModal}/>;
             break;
         case PageTypes.signedInUpdateName:
             content = <UpdateName user={user} setUser={setUser} />;
