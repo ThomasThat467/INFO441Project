@@ -128,8 +128,9 @@ class App extends Component {
                         setPage={this.setPage}
                         setAuthToken={this.setAuthToken}
                         user={user}
+                        setUser={this.setUser}
                         plants={plants}
-                        setUser={this.setUser} />
+                        setPlants={this.setPlants} />
                     :
                     <Auth page={page}
                         setPage={this.setPage}

@@ -6,7 +6,7 @@ import {AddPlantModal} from '../../Components/AddPlant.js'
 
 const MainPageContent = ({ user, plants, setPage }) => {
     const [avatar, setAvatar] = useState(null)
-
+    
     async function fetchAvatar() {
         const response = await fetch(api.base + api.handlers.myuserAvatar, {
             method: "GET",
@@ -35,7 +35,7 @@ const MainPageContent = ({ user, plants, setPage }) => {
         </nav>
       </header>
       
-      {/* <PlantList plants={this.state.plants}/> */}
+      <PlantList plants={plants}/>
       {/* <AddPlantModal addPlantCallback={this.addPlantCallback} toggleModal={this.toggleModal} isModalOpen={false}></AddPlantModal> */}
 
       {avatar && <img className={"avatar"} src={avatar} alt={`${user.firstName}'s avatar`} />}
