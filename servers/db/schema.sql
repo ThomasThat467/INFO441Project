@@ -19,5 +19,6 @@ create table if not exists Plants (
   ID int not null auto_increment primary key,
   Species varchar(255) not null, 
   WateringSchedule varchar(255) not null,
-  PhotoURL varchar(2083) not null
+  PhotoURL varchar(2083) not null,
+  UserID int not null 
 );

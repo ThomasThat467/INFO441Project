@@ -7,7 +7,11 @@ class AddPlant extends Component () {
         super(props);
         this.state = {
             file: null,
-            error: ''
+            error: '',
+            isModalOpen: props.isModalOpen,
+            plantName: '',
+            wateringSchedule:[],
+            img: ''
         }
     }
 
@@ -40,6 +44,20 @@ class AddPlant extends Component () {
 
     setError = (error) => {
         this.setState({ error })
+    }
+
+     handleWateringSchedule = (schedule) => {
+        console.log("handleWateringScheduleCalled", schedule);
+        this.setState({wateringSchedule: schedule});
+    }
+
+     handleChange = (event) => {
+        let field = event.target.name; //which input
+        let value = event.target.value; //what value
+    
+        let changes = {}; //object to hold changes
+        changes[field] = value; //change this field
+        this.setState(changes); //update state
     }
 
 //need to get this working
