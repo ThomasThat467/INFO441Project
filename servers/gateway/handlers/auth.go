@@ -2,9 +2,8 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
-	"io/ioutil"
 	"net/http"
+	"path"
 	"strconv"
 	"strings"
 	"time"
@@ -20,231 +19,185 @@ import (
 //struct as the receiver on these functions so that you have
 //access to things like the session store and user store.
 
-// UsersHandler ...
-func (ctx *HandlerContext) UsersHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodPost {
-		contentType := r.Header.Get("Content-Type")
-		//println(contentType)
-		if contentType != "application/json" {
-			http.Error(w, "Request body must be json but got: %d", http.StatusUnsupportedMediaType)
-			return
-		} else {
-			//println("in else statement")
-			responseBody, _ := ioutil.ReadAll(r.Body)
-			newUser := users.NewUser{}
-			//json.Unmarshal([]byte(responseBody), &newUser)
-			err := json.Unmarshal([]byte(responseBody), &newUser)
-			if err != nil {
-				http.Error(w, err.Error(), http.StatusBadRequest)
-				return
-			}
-
-			createdNewUser, err := newUser.ToUser()
-			if err != nil {
-				http.Error(w, err.Error(), http.StatusInternalServerError)
-				return
-			}
-			newInserted, err := ctx.UserStore.Insert(createdNewUser)
-			if err != nil {
-				//println("bad request")
-				http.Error(w, err.Error(), http.StatusBadRequest)
-				return
-			}
-
-			sessionState := SessionState{SigningKey: ctx.SigningKey, SessionTime: time.Now(), SessionUser: *newInserted}
-			sessionID, err := sessions.BeginSession(ctx.SigningKey, ctx.SessionStore, sessionState, w)
-			if err != nil {
-				fmt.Println("Failed to create session")
-				http.Error(w, err.Error(), http.StatusInternalServerError)
-				return
-			}
-
-			if err != nil {
-				//println("bad request")
-				// nil pointer
-				http.Error(w, err.Error(), http.StatusBadRequest)
-				return
-			}
-
-			w.WriteHeader(http.StatusCreated)
-			w.Header().Set("Content-Type", "application/json")
-			w.Header().Set("Authorization", "Bearer "+sessionID.String())
-			addedUser, _ := json.Marshal(newInserted)
-			w.Write(addedUser)
+/// UsersHandler handles requests for users resource
+func (context *HandlerContext) UsersHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "POST" {
+		if !strings.HasPrefix(r.Header.Get("Content-Type"), "application/json") {
+			http.Error(w, "The request body must be a JSON", http.StatusUnsupportedMediaType)
 			return
 		}
-	} else if r.Method == http.MethodOptions {
-		//testing to get around preflight cors
-		return
-	} else {
-		//println("big else statement")
-		http.Error(w, "Method not allowed %d", http.StatusMethodNotAllowed)
-		return
-	}
-}
-
-// SpecificUserHandler ...
-func (ctx *HandlerContext) SpecificUserHandler(w http.ResponseWriter, r *http.Request) {
-	userID := strings.TrimPrefix(r.URL.Path, "/v1/users/")
-	currentUser := &users.User{}
-	sessionID, err := sessions.GetSessionID(r, ctx.SigningKey)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusUnauthorized)
-	}
-	w.Header().Set("Authorization", "Bearer "+sessionID.String())
-
-	_, err = sessions.GetState(r, ctx.SigningKey, ctx.SessionStore, &SessionState{})
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusUnauthorized)
-		w.WriteHeader(http.StatusUnauthorized)
-		return
-	}
-
-	if r.Method == http.MethodGet || r.Method == http.MethodPatch {
-		if userID == "me" {
-			sessionState := &SessionState{}
-			_, err := sessions.GetState(r, ctx.SigningKey, ctx.SessionStore, sessionState)
-			if err != nil {
-				http.Error(w, err.Error(), http.StatusNotFound)
-				return
-			}
-			currentUser = &sessionState.SessionUser
-			userID = fmt.Sprint(currentUser.ID)
-		} else {
-			numID, _ := strconv.ParseInt(userID, 10, 64)
-			currentUser, err = ctx.UserStore.GetByID(numID)
-			if err != nil {
-				http.Error(w, err.Error(), http.StatusNotFound)
-				return
-			}
-		}
-		userID = strconv.FormatInt(currentUser.ID, 10)
-		intID := currentUser.ID
-		if r.Method == http.MethodGet {
-			user, err := ctx.UserStore.GetByID(intID)
-			if err != nil {
-				http.Error(w, err.Error(), http.StatusNotFound)
-				return
-			}
-			json, _ := json.Marshal(user)
-			w.Header().Set("Content-Type", "application/json")
-			w.Write(json)
-			w.WriteHeader(http.StatusOK)
+		newUser := &users.NewUser{}
+		dec := json.NewDecoder(r.Body)
+		if err := dec.Decode(newUser); err != nil {
+			http.Error(w, "Error converting user to JSON\n"+err.Error(), http.StatusBadRequest)
 			return
 		}
-	} else if r.Method == http.MethodPatch {
-		if strconv.FormatInt(currentUser.ID, 10) != userID {
-			fmt.Printf("Status not found for that id. Code: %d", http.StatusNotFound)
+		user, err := newUser.ToUser()
+		if err != nil {
+			http.Error(w, "Error creating user\n"+err.Error(), http.StatusBadRequest)
 			return
 		}
-		if !strings.Contains(r.Header.Get("Content-Type"), "application/json") {
-			fmt.Printf("Unnaccepted content type. Response body must be in JSON. Code: %d", http.StatusUnsupportedMediaType)
+		_, err = context.UserStore.Insert(user)
+		if err != nil {
+			http.Error(w, "Error inserting user to DB\n"+err.Error(), http.StatusBadRequest)
 			return
 		}
-		marshaled, err := ioutil.ReadAll(r.Body)
-		var updates users.Updates
-		if err == nil {
-			json.Unmarshal([]byte(marshaled), &updates)
+		newSession := &SessionState{
+			SessionTime: time.Now(),
+			SessionUser: *user,
 		}
-		intID := currentUser.ID
-		updated, err := ctx.UserStore.Update(intID, &updates)
+		_, err = sessions.BeginSession(context.SigningKey, context.SessionStore, newSession, w)
+		if err != nil {
+			http.Error(w, "Error beginning session\n"+err.Error(), http.StatusInternalServerError)
+			return
+		}
 		w.Header().Set("Content-Type", "application/json")
-		marshalUser, err := json.Marshal(updated)
-		if err == nil {
-			w.Write(marshalUser)
-		}
-		w.WriteHeader(http.StatusOK)
-		return
-
-	} else if r.Method == http.MethodOptions {
-		//testing to get around preflight cors
-		return
-	}
-}
-
-// SessionsHandler ...
-func (ctx *HandlerContext) SessionsHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodPost {
-		contentType := r.Header.Get("Content-Type")
-		//println(r.Method)
-		if contentType != "application/json" {
-			//println("ctype" + contentType)
-			fmt.Printf("Request body must be json. Got code: %d \n", http.StatusUnsupportedMediaType)
+		w.WriteHeader(http.StatusCreated)
+		resBody, err := json.Marshal(user)
+		if err != nil {
+			http.Error(w, "Error responding with JSON"+err.Error(), http.StatusInternalServerError)
 			return
 		}
-
-		credentials := users.Credentials{}
-		marshaled, err := ioutil.ReadAll(r.Body)
-
-		if err == nil {
-			json.Unmarshal([]byte(marshaled), &credentials)
-			user, err := ctx.UserStore.GetByEmail(credentials.Email)
-			if user == nil {
-				bcrypt.GenerateFromPassword([]byte("abcde1234567"), 13)
-				http.Error(w, "Invalid creds", http.StatusUnauthorized)
-				return
-			}
-			if err != nil || user.Authenticate(credentials.Password) != nil {
-				http.Error(w, "Invalid creds", http.StatusUnauthorized)
-				return
-			} else {
-				sessionState := &SessionState{
-					SessionTime: time.Now(),
-					SessionUser: *user,
-				}
-				sessions.BeginSession(ctx.SigningKey, ctx.SessionStore, sessionState, w)
-				headerIP := r.Header.Get("X-Forwarded-For")
-				currentIP := r.RemoteAddr
-				if len(headerIP) != 0 {
-					currentIP = headerIP
-				}
-
-				signInUser := users.SignIn{
-					ID:         int64(0),
-					UserID:     user.ID,
-					SignInTime: time.Now().String(),
-					IP:         currentIP,
-				}
-				ctx.UserStore.InsertSignedIn(&signInUser)
-				//w.Header().Set("Content-Type", "application/json")
-				w.WriteHeader(http.StatusCreated)
-				w.Write(marshaled)
-			}
-		}
-	} else if r.Method == http.MethodOptions {
-		//testing to get around preflight cors
-		return
+		w.Write(resBody)
 	} else {
-		//println("in big else")
-		w.WriteHeader(http.StatusMethodNotAllowed)
-		fmt.Printf("SessionsHandler - Status method not allowed. Code: %d \n", http.StatusMethodNotAllowed)
+		http.Error(w, "Current request method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 }
 
-// SpecificSessionHandler ...
-func (ctx *HandlerContext) SpecificSessionHandler(w http.ResponseWriter, r *http.Request) {
-	mine := strings.TrimPrefix(r.URL.Path, "/v1/sessions/")
-	if r.Method == http.MethodDelete {
-		if mine != "mine" {
-			fmt.Printf("Error status forbidden. Code: %d \n", http.StatusForbidden)
-			w.WriteHeader(http.StatusForbidden)
-			w.Write([]byte("Access forbidden"))
+// SpecificUserHandler handles requests for a specific user
+func (context *HandlerContext) SpecificUserHandler(w http.ResponseWriter, r *http.Request) {
+	currSess := &SessionState{}
+	_, err := sessions.GetState(r, context.SigningKey, context.SessionStore, currSess)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusUnauthorized)
+		return
+	}
+	if r.Method == "GET" {
+		var userID int64
+		if path.Base(r.URL.Path) == "me" {
+			userID = int64(currSess.SessionUser.ID)
 		} else {
-			_, err := sessions.EndSession(r, ctx.SigningKey, ctx.SessionStore)
-			if err == nil {
-				w.WriteHeader(http.StatusBadRequest)
-			} else {
-				w.WriteHeader(http.StatusOK)
-				w.Write([]byte("Signed out"))
+			lastPath, err := strconv.Atoi(path.Base(r.URL.Path))
+			if err != nil {
+				http.Error(w, "This user ID does not exist", http.StatusNotFound)
+				return
+			}
+			userID = int64(lastPath)
+		}
+		user, err := context.UserStore.GetByID(int64(userID))
+		if err != nil {
+			http.Error(w, "This user ID does not exist", http.StatusNotFound)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		resBody, err := json.Marshal(user)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		w.Write(resBody)
+	} else if r.Method == "PATCH" {
+		lastPath := path.Base(r.URL.Path)
+		if lastPath != "me" {
+			userID, err := strconv.Atoi(lastPath)
+			if err != nil || int64(userID) != currSess.SessionUser.ID {
+				http.Error(w, "Cannot request this user ID", http.StatusForbidden)
+				return
 			}
 		}
-	} else if r.Method == http.MethodOptions {
-		//testing to get around preflight cors
-		return
+		if !strings.HasPrefix(r.Header.Get("Content-Type"), "application/json") {
+			http.Error(w, "The request body must be a JSON", http.StatusUnsupportedMediaType)
+			return
+		}
+		updates := &users.Updates{}
+		dec := json.NewDecoder(r.Body)
+		if err := dec.Decode(updates); err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		user, err := context.UserStore.Update(currSess.SessionUser.ID, updates)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		currSess.SessionUser = *user
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		resBody, err := json.Marshal(user)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		w.Write(resBody)
 	} else {
-		fmt.Printf("SpecificSessionHandler - Status method not allowed. Code: %d \n", http.StatusMethodNotAllowed)
-		w.WriteHeader(http.StatusMethodNotAllowed)
+		http.Error(w, "Current request method not allowed", http.StatusMethodNotAllowed)
+		return
 	}
+}
 
+// SessionsHandler handles requests for sessions resource
+func (context *HandlerContext) SessionsHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "POST" {
+		if !strings.HasPrefix(r.Header.Get("Content-Type"), "application/json") {
+			http.Error(w, "The request body must be a JSON", http.StatusUnsupportedMediaType)
+			return
+		}
+		creds := &users.Credentials{}
+		dec := json.NewDecoder(r.Body)
+		if err := dec.Decode(creds); err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		user, err := context.UserStore.GetByEmail(creds.Email)
+		if err != nil {
+			bcrypt.GenerateFromPassword([]byte("abcde1234567"), 13)
+			http.Error(w, err.Error(), http.StatusUnauthorized)
+			return
+		}
+		if err := user.Authenticate(creds.Password); err != nil {
+			http.Error(w, err.Error(), http.StatusUnauthorized)
+			return
+		}
+		sessionState := &SessionState{
+			SessionTime: time.Now(),
+			SessionUser: *user,
+		}
+		_, err = sessions.BeginSession(context.SigningKey, context.SessionStore, sessionState, w)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusCreated)
+		resBody, err := json.Marshal(user)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		w.Write(resBody)
+	} else {
+		http.Error(w, "Current request method is not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+}
+
+//SpecificSessionHandler handles requests related to a specific session
+func (context *HandlerContext) SpecificSessionHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "DELETE" {
+		if path.Base(r.URL.Path) != "mine" {
+			http.Error(w, "Cannot end a session that isn't yours", http.StatusForbidden)
+			return
+		}
+		_, err := sessions.EndSession(r, context.SigningKey, context.SessionStore)
+		if err != nil {
+			http.Error(w, "Error ending this session", http.StatusForbidden)
+			return
+		}
+		w.Write([]byte("signed out"))
+	} else {
+		http.Error(w, "Current request method is not allowed", http.StatusMethodNotAllowed)
+		return
+	}
 }
