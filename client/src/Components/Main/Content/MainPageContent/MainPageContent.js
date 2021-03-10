@@ -23,10 +23,10 @@ const MainPageContent = ({ user, plants, setPage }) => {
         setAvatar(URL.createObjectURL(imgBlob));
     }
 
-    useEffect(() => {
-        fetchAvatar();
-        return;
-    }, []);
+    // useEffect(() => {
+    //     fetchAvatar();
+    //     return;
+    // }, []);
 
     return <>
       <header>
@@ -38,7 +38,7 @@ const MainPageContent = ({ user, plants, setPage }) => {
       <PlantList plants={plants}/>
       {/* <AddPlantModal addPlantCallback={this.addPlantCallback} toggleModal={this.toggleModal} isModalOpen={false}></AddPlantModal> */}
 
-      {avatar && <img className={"avatar"} src={avatar} alt={`${user.firstName}'s avatar`} />}
+      {/* {avatar && <img className={"avatar"} src={avatar} alt={`${user.firstName}'s avatar`} />} */}
       <div><button onClick={(e) => { setPage(e, PageTypes.signedInAddedPlant) }}>Add Plant</button></div>
 
     </>

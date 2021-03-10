@@ -21,9 +21,11 @@ export class AddPlantModal extends Component {
         this.setState({isModalOpen: !this.state.isModalOpen});
     }
 
+    // plantRefs = call to database
+
     addPlant() {
-        //let newPlant = {plantName: this.state.plantName, wateringSchedule: this.state.wateringSchedule, lastWatered: '', img: this.state.img}
-        //plantsRef.push(newPlant);
+        let newPlant = {plantName: this.state.plantName, wateringSchedule: this.state.wateringSchedule, lastWatered: '', img: this.state.img}
+        // plantsRef.push(newPlant);
 
         // plantsRef.on('value', (snapshot) => {
         //     let plants = snapshot.val();
@@ -34,7 +36,7 @@ export class AddPlantModal extends Component {
 
     handleWateringSchedule = (schedule) => {
         console.log("handleWateringScheduleCalled", schedule);
-        //this.state.wateringSchedule = schedule;
+        this.setState({wateringSchedule: schedule});
     }
 
     handleChange = (event) => {

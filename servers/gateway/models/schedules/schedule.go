@@ -1,52 +1,41 @@
-package plants
-
-import (
-	"crypto/md5"
-	"encoding/hex"
-	"strings"
-)
+package schedules
 
 //gravatarBasePhotoURL is the base URL for Gravatar image requests.
 //See https://id.gravatar.com/site/implement/images/ for details
-const gravatarBasePhotoURL = "https://www.gravatar.com/avatar/"
+//const gravatarBasePhotoURL = "https://www.gravatar.com/avatar/"
 
-type Plant struct {
+type Schedule struct {
 	ID               int64  `json:"id"`
-	Species          string `json:"species"`
 	WateringSchedule string `json:"schedule"`
-	PhotoURL         string `json:"photoURL"`
 }
 
-//Updates represents allowed updates to a plant
+//Updates represents allowed updates to a schedule
 type Updates struct {
 	WateringSchedule string `json:"schedule"`
-	PhotoURL         string `json:"photoURL"`
 }
 
 //NewPlant represents a new plant that added by a user
-type NewPlant struct {
-	Species          string `json:"species"`
+type NewSchedule struct {
 	WateringSchedule string `json:"schedule"`
-	PhotoURL         string `json:"photoURL"`
 }
 
 //ToUser converts the NewUser to a User, setting the
 //PhotoURL and PassHash fields appropriately
-func (np *NewPlant) ToPlant() (*Plant, error) {
+func (ns *NewSchedule) ToSchedule() (*Schedule, error) {
 
-	newPlant := &Plant{
-		Species:          np.Species,
-		WateringSchedule: np.WateringSchedule,
+	newSchedule := &Schedule{
+		WateringSchedule: ns.WateringSchedule,
 	}
 
-	GetGravitar(newPlant, np.Species)
-	return newPlant, nil
+	//GetGravitar(newSchedule)
+	return newSchedule, nil
 }
 
 // GetGravitar calculates the gravitar hash based on the string given and
 // stores it for the plant  -- copy from user.go
-func GetGravitar(plant *Plant, str string) {
+// not sure for schedule
+/* func GetGravitar(user *Schedule) {
 	photoURLHash := md5.Sum([]byte(strings.ToLower(strings.TrimSpace(str))))
 	photoURLHashString := hex.EncodeToString(photoURLHash[:])
-	plant.PhotoURL = gravatarBasePhotoURL + photoURLHashString
-}
+	user.PhotoURL = gravatarBasePhotoURL + photoURLHashString
+} */
