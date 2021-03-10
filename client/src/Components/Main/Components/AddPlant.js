@@ -3,7 +3,7 @@ import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
 import {WateringSchedule} from './WateringSchedule.js'
 
 
-export class AddPlant extends Component {
+export class AddPlantModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -14,7 +14,7 @@ export class AddPlant extends Component {
         };
         this.toggleModal = this.toggleModal.bind(this);
         this.addPlantCallback = this.props.addPlantCallback;
-        this.addPlant = this.addPlant.bind(this);
+        // this.addPlant = this.addPlant.bind(this);
     }
 
     toggleModal() {
