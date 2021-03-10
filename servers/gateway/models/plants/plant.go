@@ -12,21 +12,21 @@ const gravatarBasePhotoURL = "https://www.gravatar.com/avatar/"
 
 type Plant struct {
 	ID               int64  `json:"id"`
-	Species          string `json:"userName"`
-	WateringSchedule string `json:"photoURL"`
+	Species          string `json:"species"`
+	WateringSchedule string `json:"schedule"`
 	PhotoURL         string `json:"photoURL"`
 }
 
 //Updates represents allowed updates to a plant
 type Updates struct {
-	WateringSchedule string `json:"photoURL"`
+	WateringSchedule string `json:"schedule"`
 	PhotoURL         string `json:"photoURL"`
 }
 
 //NewPlant represents a new plant that added by a user
 type NewPlant struct {
-	Species          string `json:"userName"`
-	WateringSchedule string `json:"photoURL"`
+	Species          string `json:"species"`
+	WateringSchedule string `json:"schedule"`
 	PhotoURL         string `json:"photoURL"`
 }
 
