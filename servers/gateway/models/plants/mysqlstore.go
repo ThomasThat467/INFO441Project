@@ -62,9 +62,40 @@ func (ms *MySQLStore) GetByID(id int64) (*Plant, error) {
 	return ms.getByProvidedType(ID, id)
 }
 
-//GetBySpecies returns the Plants of the given Species
+//GetByPlantName returns the Plants of the given Species
 func (ms *MySQLStore) GetByPlantName(plantName string) (*Plant, error) {
 	return ms.getByProvidedType(PlantName, plantName)
+}
+
+//GetByUser returns the Plants of the given User
+func (ms *MySQLStore) GetByUser(UserID int64) (*PlantInventory, error) {
+	sel := string("select PlantID, UserID, PlantName, WateringSchedule, LastWatered, PhotoURL from Plants where UserID = ?")
+
+	rows, err := ms.Database.Query(sel, UserID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	PlantInventory := &PlantInventory{}
+
+	for rows.Next() {
+		plant := &Plant{}
+		if err := rows.Scan(
+			&plant.ID,
+			&plant.UserID,
+			&plant.PlantName,
+			&plant.WateringSchedule,
+			&plant.LastWatered,
+			&plant.PhotoURL); err != nil {
+			return nil, err
+		}
+		PlantInventory.Plants = append(PlantInventory.Plants, *plant)
+	}
+	if rows.Err() != nil {
+		return nil, err
+	}
+	return PlantInventory, nil
 }
 
 //Insert inserts the user into the database, and returns

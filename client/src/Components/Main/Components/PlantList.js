@@ -24,8 +24,8 @@ export class PlantList extends Component {
     
     render() {
         
-        console.log(this.props.plants);
-        let plantList = this.props.plants.map((plant) => {
+        console.log(this.props.plants.Plants);
+        let plantList = this.props.plants.Plants.map((plant) => {
             return <PlantCard  key={plant.plantName} plant={plant}></PlantCard>
         })
         console.log(plantList)
