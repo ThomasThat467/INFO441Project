@@ -112,13 +112,20 @@ class SignUp extends Component {
         const values = this.state;
         const { error } = this.state;
         return <>
+            <header>
+              <nav className="navbar">
+                <div>
+                  <h1>Sign Up</h1>
+                </div>
+              </nav>
+            </header>
             <Errors error={error} setError={this.setError} />
             <SignForm
                 setField={this.setField}
                 submitForm={this.submitForm}
                 values={values}
                 fields={this.fields} />
-            <button onClick={(e) => this.props.setPage(e, PageTypes.signIn)}>Sign in instead</button>
+            <button className="btn btn-success mt-2 auth-btn" onClick={(e) => this.props.setPage(e, PageTypes.signIn)}>Sign in instead</button>
         </>
     }
 }

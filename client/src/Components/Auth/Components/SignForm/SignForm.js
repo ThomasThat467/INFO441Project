@@ -8,7 +8,7 @@ const SignForm = ({ setField, submitForm, values, fields }) => {
                 const { key, name } = d;
                 return <div key={key}>
                     <span>{name}: </span>
-                    <input
+                    <input className="m-2 mt-3"
                         value={values[key]}
                         name={key}
                         onChange={setField}
@@ -16,7 +16,7 @@ const SignForm = ({ setField, submitForm, values, fields }) => {
                     />
                 </div>
             })}
-            <input type="submit" value="Submit" />
+            <input className="btn btn-success mt-2 auth-btn" type="submit" value="Submit" />
         </form>
     </>
 }

@@ -1,30 +1,22 @@
 import React from 'react';
 import PageTypes from '../../Constants/PageTypes';
 import MainPageContent from './Content/MainPageContent/MainPageContent';
-import SignOutButton from './Components/SignOutButton/SignOutButton';
-import UpdateName from './Components/UpdateName/UpdateName';
+// import SignOutButton from './Components/SignOutButton/SignOutButton';
 
 const Main = ({ page, setPage, setAuthToken, plants, setUser, user, setPlants, addPlantCallback, toggleModal }) => {
     let content;
     let contentPage = true;
-    switch (page) {
-        case PageTypes.signedInMain:
-            content = <MainPageContent user={user} setPage={setPage} plants={plants} setPlants={setPlants} addPlantCallback={addPlantCallback} toggleModal={toggleModal}/>;
-            break;
-        case PageTypes.signedInUpdateName:
-            content = <UpdateName user={user} setUser={setUser} />;
-            break;
-        default:
-            content = <>
-            Error, invalid path reached
-            {contentPage && <button onClick={(e) => setPage(e, PageTypes.signedInMain)}>Back to main</button>}</>;
-            break;
+    if (page == PageTypes.signedInMain){
+      content = <MainPageContent user={user} setPage={setPage} plants={plants} setPlants={setPlants} addPlantCallback={addPlantCallback} toggleModal={toggleModal} setUser={setUser} setAuthToken={setAuthToken}/>;
+    } else {
+      content = <>
+      Error, invalid path reached
+      {contentPage && <button onClick={(e) => setPage(e, PageTypes.signedInMain)}>Back to main</button>}</>;
     }
     return <>
         {content}
-        <SignOutButton setUser={setUser} setAuthToken={setAuthToken} />
         <footer>
-          <p>Created by: Hailey Meister, Jisu Kim, Eric Gabrielson, and Thomas That</p>
+          <p className="footer-text">&#169; Hailey Meister, Jisu Kim, Eric Gabrielson, and Thomas That</p>
       </footer>
     </>
 }

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
 import {WateringSchedule} from './WateringSchedule.js'
+import SignOutButton from '../Components/SignOutButton/SignOutButton';
 
 
 
@@ -54,9 +55,10 @@ export class AddPlantModal extends Component {
 
   return (
     <div>
-      <Button onClick={this.toggleModal} className="btn btn-primary add-btn">
+      <button onClick={this.toggleModal} className="btn btn-outline-light">
           Add Plant
-      </Button>
+      </button>
+      <SignOutButton setUser={this.props.setUser} setAuthToken={this.props.setAuthToken} />
       <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} className="add-plant">
           <ModalHeader>
                 Create New Plant
