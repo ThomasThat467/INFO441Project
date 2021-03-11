@@ -1,22 +1,26 @@
 import React, { Component } from 'react';
+import { Checkbox } from '@material-ui/core';
 import api from '../../../../Constants/APIEndpoints/APIEndpoints';
 import Errors from '../../../Errors/Errors';
+import { WateringSchedule } from './WateringSchedule';
 
 class AddPlant extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: '',
-            lastName: '',
+            plantName: '',
+            wateringSchedule: [],
+            lastWatered: new Date(),
+            photoURL: '',
             error: ''
         }
     }
 
     sendRequest = async (e) => {
         e.preventDefault();
-        const { firstName, lastName } = this.state;
-        const sendData = { firstName, lastName };
-        const response = await fetch(api.base + api.handlers.myuser, {
+        const { plantName, wateringSchedule, lastWatered, photoURL } = this.state;
+        const sendData = { plantName, wateringSchedule, lastWatered, photoURL };
+        const response = await fetch(api.base + api.handlers.plants, {
             method: "POST",
             body: JSON.stringify(sendData),
             headers: new Headers({
@@ -30,13 +34,17 @@ class AddPlant extends Component {
             this.setError(error);
             return;
         }
-        alert("Name changed") // TODO make this better by refactoring errors
-        const user = await response.json();
-        this.props.setUser(user);
+        alert("Added plant") // TODO make this better by refactoring errors
+        // const user = await response.json();
+        // this.props.setUser(user);
     }
 
     setValue = (e) => {
         this.setState({ [e.target.name]: e.target.value });
+    }
+
+    addDay = (e) => {
+        this.state.wateringSchedule.push(e.target.value);
     }
 
     setError = (error) => {
@@ -47,15 +55,15 @@ class AddPlant extends Component {
         const { firstName, lastName, error } = this.state;
         return <>
             <Errors error={error} setError={this.setError} />
-            <div>Enter a new name</div>
+            <div>Give info for new plant:</div>
             <form onSubmit={this.sendRequest}>
                 <div>
-                    <span>First name: </span>
-                    <input name={"firstName"} value={firstName} onChange={this.setValue} />
+                    <span>Plant Name: </span>
+                    <input name={"plantName"} value={firstName} onChange={this.setValue} />
                 </div>
                 <div>
-                    <span>Last name: </span>
-                    <input name={"lastName"} value={lastName} onChange={this.setValue} />
+                    <span>Days to Water Each Week: </span>
+                    <WateringSchedule></WateringSchedule>
                 </div>
                 <input type="submit" value="Change name" />
             </form>

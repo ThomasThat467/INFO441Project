@@ -4,6 +4,7 @@ export default {
     handlers: {
         users: "/v1/users",
         myuser: "/v1/users/me",
+        plants: "/v1/plant",
         myplants: "/v1/plant/me",
         myuserPlant: "/v1/users/me/plant",
         sessions: "/v1/sessions",
