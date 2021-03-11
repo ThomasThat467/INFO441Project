@@ -1,11 +1,5 @@
 package plants
 
-import (
-	"crypto/md5"
-	"encoding/hex"
-	"strings"
-)
-
 //gravatarBasePhotoURL is the base URL for Gravatar image requests.
 //See https://id.gravatar.com/site/implement/images/ for details
 const gravatarBasePhotoURL = "https://www.gravatar.com/avatar/"
@@ -52,15 +46,5 @@ func (np *NewPlant) ToPlant() (*Plant, error) {
 		LastWatered:      np.LastWatered,
 		PhotoURL:         np.PhotoURL,
 	}
-
-	GetGravitar(newPlant, np.PlantName)
 	return newPlant, nil
-}
-
-// GetGravitar calculates the gravitar hash based on the string given and
-// stores it for the plant  -- copy from user.go
-func GetGravitar(plant *Plant, str string) {
-	photoURLHash := md5.Sum([]byte(strings.ToLower(strings.TrimSpace(str))))
-	photoURLHashString := hex.EncodeToString(photoURLHash[:])
-	plant.PhotoURL = gravatarBasePhotoURL + photoURLHashString
 }
