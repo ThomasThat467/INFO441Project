@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import api from '../../../../Constants/APIEndpoints';
 import Errors from '../../../Errors/Errors';
+import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
+import {WateringSchedule} from '../WateringSchedule.js'
 
-class AddPlant extends Component () {
+export class AddPlant extends Component () {
     constructor(props) {
         super(props);
         this.state = {
@@ -110,4 +112,3 @@ class AddPlant extends Component () {
 
 }
 
-export default AddPlant;
