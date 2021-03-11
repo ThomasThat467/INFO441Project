@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/ThomasThat467/INFO441Project/tree/main/servers/models/plants"
+	"github.com/ThomasThat467/INFO441Project/tree/main/servers/sessions"
 )
 
 // PlantHandler ...
@@ -55,6 +56,23 @@ func (ctx *HandlerContext) SpecificPlantHandler(w http.ResponseWriter, r *http.R
 	currentPlant := &plants.Plant{}
 
 	if r.Method == http.MethodGet || r.Method == http.MethodPatch {
+		if plantID == "me" {
+			if r.Method == http.MethodGet {
+				currSess := &SessionState{}
+				sessions.GetState(r, ctx.SigningKey, ctx.SessionStore, currSess)
+				plantInventory, err := ctx.PlantStore.GetByUser(currSess.SessionUser.ID)
+				if err != nil {
+					http.Error(w, err.Error(), http.StatusNotFound)
+					return
+				} else {
+					json, _ := json.Marshal(plantInventory)
+					w.Header().Set("Content-Type", "application/json")
+					w.Write(json)
+					w.WriteHeader(http.StatusOK)
+					return
+				}
+			}
+		}
 		plantID = strconv.FormatInt(currentPlant.ID, 10)
 		plantintID := currentPlant.ID
 		if r.Method == http.MethodGet {

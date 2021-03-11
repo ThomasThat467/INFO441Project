@@ -9,26 +9,20 @@ export class PlantList extends Component {
         this.state = {plants:[]};
     }
 
-    componentDidMount() {
-
-        // plantsRef.on('value', (snapshot) => {
-        //     let value = snapshot.val();
-        //     let plantIds = Object.keys(value);
-        //     let plants = plantIds.map((plantId) => {
-        //         return {id: plantId, ...value[plantId]}
-        //     })
-        //     this.setState({plants: plants});
-        // });
-        
-    }
+    
     
     render() {
-        
-        console.log(this.props.plants);
-        let plantList = this.props.plants.map((plant) => {
+        let plantList;
+        console.log(this.props.plants.Plants);
+        if(this.props.plants.Plants ==  null) {
+          return
+        } else {
+          plantList = this.props.plants.Plants.map((plant) => {
             return <PlantCard  key={plant.plantName} plant={plant}></PlantCard>
-        })
-        console.log(plantList)
+          })
+          console.log(plantList)
+        }
+        
         return (
             <div className="row" id="inventory">{plantList}</div>
         );
