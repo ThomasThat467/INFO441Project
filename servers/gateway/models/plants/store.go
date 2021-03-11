@@ -15,6 +15,9 @@ type Store interface {
 	//GetByPlantName returns the Plants of the given PlantName
 	GetByPlantName(plantName string) (*Plant, error)
 
+	//GetByUser returns the Plants of the given User
+	GetByUser(UserID int64) (*PlantInventory, error)
+
 	//Insert inserts the plant into the database, and returns
 	//the newly-inserted Plant, complete with the DBMS-assigned ID
 	Insert(plant *Plant) (*Plant, error)

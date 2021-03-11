@@ -19,14 +19,14 @@ class App extends Component {
         this.getCurrentUser()
     }
     componentDidMount() {
-        fetch('data/inventory.json')
-        .then( (response) => {
-            return response.json();
-        })
-        .then( (data) => {
-            this.setState({plants: data.plantInventory})
-        })
-
+        // fetch('data/inventory.json')
+        // .then( (response) => {
+        //     return response.json();
+        // })
+        // .then( (data) => {
+        //     this.setState({plants: data.plantInventory})
+        // })
+        this.getCurrentPlants()
     }
 
 

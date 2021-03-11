@@ -10,6 +10,12 @@ import (
 //See https://id.gravatar.com/site/implement/images/ for details
 const gravatarBasePhotoURL = "https://www.gravatar.com/avatar/"
 
+// PlantInventory ...
+type PlantInventory struct {
+	Plants []Plant `json:"Plants"`
+}
+
+// Plant ...
 type Plant struct {
 	ID               int64  `json:"id"`
 	UserID           int64  `json:"userId"`
