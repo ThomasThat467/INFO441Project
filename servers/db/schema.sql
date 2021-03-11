@@ -22,4 +22,3 @@ create table if not exists Plants (
   WateringSchedule varchar(255) not null,
   LastWatered time not null,
   PhotoURL varchar(2083) not null
-);
