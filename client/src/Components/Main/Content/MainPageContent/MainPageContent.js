@@ -36,7 +36,7 @@ const MainPageContent = ({ user, plants, setPage, addPlantCallback, toggleModal 
       <header>
         <nav className="navbar">
           <span><h1 className="navbar-brand">Plant Tracker</h1></span>
-          <AddPlantModal addPlantCallback={addPlantCallback} toggleModal={toggleModal} isModalOpen={false}></AddPlantModal>
+          <AddPlantModal addPlantCallback={addPlantCallback} toggleModal={toggleModal} isModalOpen={false}/>
         </nav>
       </header>
       <PlantList plants={plants}/>
