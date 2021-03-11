@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import api from '../../../../Constants/APIEndpoints';
 import Errors from '../../../Errors/Errors';
+//import { Button } from 'reactstrap';
 
 const SignOutButton = ({ setAuthToken, setUser }) => {
     const [error, setError] = useState("");
 
-    return <><button onClick={async (e) => {
+    return <>
+    <button className="ml-2 btn btn-outline-light" onClick={async (e) => {
         e.preventDefault();
         const response = await fetch(api.base + api.handlers.sessionsMine, {
           method: "DELETE",

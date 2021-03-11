@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import PageTypes from '../../../../Constants/PageTypes';
-import api from '../../../../Constants/APIEndpoints';
+// import React, { useState, useEffect } from 'react';
+// import PageTypes from '../../../../Constants/PageTypes';
+// import api from '../../../../Constants/APIEndpoints';
 import {PlantList} from '../../Components/PlantList.js'
 import {AddPlantModal} from '../../Components/AddPlant.js'
 
 
-const MainPageContent = ({ user, plants, setPage, addPlantCallback, toggleModal }) => {
+const MainPageContent = ({ plants, addPlantCallback, toggleModal, setUser, setAuthToken}) => {
     //const [plant, newPlant] = useState(null)
     
     // async function fetchPlant() {
@@ -35,12 +35,15 @@ const MainPageContent = ({ user, plants, setPage, addPlantCallback, toggleModal 
     return <>
       <header>
         <nav className="navbar">
-          <span><h1 className="navbar-brand">Plant Tracker</h1></span>
-          <AddPlantModal addPlantCallback={addPlantCallback} toggleModal={toggleModal} isModalOpen={false}></AddPlantModal>        </nav>
+          <div>
+            <h1>Plant Tracker</h1>
+          </div>
+          <AddPlantModal addPlantCallback={addPlantCallback} toggleModal={toggleModal} isModalOpen={false} setUser={setUser} setAuthToken={setAuthToken}></AddPlantModal>
+        </nav>
       </header>
-      <PlantList plants={plants}/>
-
-      {/* <div><button onClick={(e) => { setPage(e, PageTypes.signedInAddedPlant) }}>Add Plant</button></div> */}
+      <body>
+          <PlantList plants={plants}/>        
+      </body>
 
     </>
 }

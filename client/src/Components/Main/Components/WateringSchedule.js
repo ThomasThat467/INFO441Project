@@ -62,6 +62,8 @@ export class WateringBadge extends Component {
         if (this.state.isActive) {
             color = "success";
         } 
-        return (<Badge onClick={this.toggleActive} color={color}>{weekday}</Badge>);
+        return (
+          <Badge className="m-1" onClick={this.toggleActive} color={color}>{weekday}</Badge>
+        );
     }
 }

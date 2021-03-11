@@ -70,8 +70,8 @@ func (ms *MySQLStore) GetByPlantName(plantName string) (*Plant, error) {
 //Insert inserts the user into the database, and returns
 //the newly-inserted User, complete with the DBMS-assigned ID
 func (ms *MySQLStore) Insert(plant *Plant) (*Plant, error) {
-	ins := "insert into Plants(Species, WateringSchedule, PhotoURL) values (?,?,?)"
-	res, err := ms.Database.Exec(ins, plant.PlantName, plant.WateringSchedule, plant.PhotoURL)
+	ins := "insert into Plants(UserID, PlantName, WateringSchedule, LastWatered, PhotoURL) values (?,?,?,?,?)"
+	res, err := ms.Database.Exec(ins, plant.UserID, plant.PlantName, plant.WateringSchedule, plant.LastWatered, plant.PhotoURL)
 	if err != nil {
 		return nil, err
 	}
