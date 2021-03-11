@@ -32,16 +32,19 @@ type NewPlant struct {
 	UserID           int64  `json:"userId"`
 	PlantName        string `json:"plantName"`
 	WateringSchedule string `json:"schedule"`
+	LastWatered      string `json:"lastWatered"`
 	PhotoURL         string `json:"photoURL"`
 }
 
-//ToUser converts the NewUser to a User, setting the
-//PhotoURL and PassHash fields appropriately
+//ToPlant converts the NewPlant to a Plant
 func (np *NewPlant) ToPlant() (*Plant, error) {
 
 	newPlant := &Plant{
+		UserID:           np.UserID,
 		PlantName:        np.PlantName,
 		WateringSchedule: np.WateringSchedule,
+		LastWatered:      np.LastWatered,
+		PhotoURL:         np.PhotoURL,
 	}
 
 	GetGravitar(newPlant, np.PlantName)
