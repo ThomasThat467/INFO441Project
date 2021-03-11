@@ -10,8 +10,8 @@ export class AddPlant extends Component () {
         this.state = {
             file: null,
             error: '',
-            isModalOpen: props.isModalOpen,
-            plantName: '',
+            isModalOpen: this.props.isModalOpen,
+            plantName: this.props.plantName,
             wateringSchedule:[],
             img: ''
         }
