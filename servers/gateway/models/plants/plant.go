@@ -12,20 +12,25 @@ const gravatarBasePhotoURL = "https://www.gravatar.com/avatar/"
 
 type Plant struct {
 	ID               int64  `json:"id"`
-	Species          string `json:"species"`
+	UserID           int64  `json:"userId"`
+	PlantName        string `json:"plantName"`
 	WateringSchedule string `json:"schedule"`
+	LastWatered      string `json:"lastWatered"`
 	PhotoURL         string `json:"photoURL"`
 }
 
 //Updates represents allowed updates to a plant
 type Updates struct {
 	WateringSchedule string `json:"schedule"`
+	LastWatered      string `json:"lastWatered"`
 	PhotoURL         string `json:"photoURL"`
 }
 
 //NewPlant represents a new plant that added by a user
 type NewPlant struct {
-	Species          string `json:"species"`
+	//not sure new plant needs userID
+	UserID           int64  `json:"userId"`
+	PlantName        string `json:"plantName"`
 	WateringSchedule string `json:"schedule"`
 	PhotoURL         string `json:"photoURL"`
 }
@@ -35,11 +40,11 @@ type NewPlant struct {
 func (np *NewPlant) ToPlant() (*Plant, error) {
 
 	newPlant := &Plant{
-		Species:          np.Species,
+		PlantName:        np.PlantName,
 		WateringSchedule: np.WateringSchedule,
 	}
 
-	GetGravitar(newPlant, np.Species)
+	GetGravitar(newPlant, np.PlantName)
 	return newPlant, nil
 }
 
