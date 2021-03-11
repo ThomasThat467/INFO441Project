@@ -8,22 +8,23 @@ export class PlantList extends Component {
 
         this.state = {plants:[]};
     }
+
+    
     
     render() {
-        let content = <div>if failed</div>
+        let plantList;
         console.log(this.props.plants.Plants);
-        if (this.props.plants.Plants == undefined) {
-          content = (<p>Add a plant above!</p>)
+        if(this.props.plants.Plants ==  null) {
+          return
         } else {
-          let plantList = this.props.plants.Plants.map((plant) => {
+          plantList = this.props.plants.Plants.map((plant) => {
             return <PlantCard  key={plant.plantName} plant={plant}></PlantCard>
-          });
-          content = (<div className="row" id="inventory">{plantList}</div>)
+          })
+          console.log(plantList)
         }
         
-        //console.log(plantList)
         return (
-            {content}
+            <div className="row" id="inventory">{plantList}</div>
         );
     }
 }
@@ -35,7 +36,7 @@ export class PlantCard extends Component {
           <div className="cards col-sm-12 col-md-6 col-xl-4">
             <div className="card card-horizontal card-img-top">
               <div className="main-card">
-                <img src={plant.photoURL} className="card-img" alt={plant.plantName} />
+                <img src={plant.img} className="card-img" alt={plant.plantName} />
                 <div className="card-body">
                     <h2 className="card-title">{plant.plantName}</h2>
                     <p className="card-text">Watering Schedule</p>
