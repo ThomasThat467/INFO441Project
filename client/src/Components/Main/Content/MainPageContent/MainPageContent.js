@@ -40,7 +40,7 @@ const MainPageContent = ({ user, plants, setPage, addPlantCallback, toggleModal 
       </header>
       <PlantList plants={plants}/>
 
-      <div><button onClick={(e) => { setPage(e, PageTypes.signedInAddedPlant) }}>Add Plant</button></div>
+      {/* <div><button onClick={(e) => { setPage(e, PageTypes.signedInAddedPlant) }}>Add Plant</button></div> */}
 
     </>
 }
