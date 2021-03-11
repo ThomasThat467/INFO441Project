@@ -6,31 +6,31 @@ import {AddPlantModal} from '../../Components/AddPlant.js'
 
 
 const MainPageContent = ({ user, plants, setPage, addPlantCallback, toggleModal }) => {
-    const [plant, newPlant] = useState(null)
+    //const [plant, newPlant] = useState(null)
     
-    async function fetchPlant() {
-        const response = await fetch(api.base + api.handlers.myuserPlant, {
-            method: "GET",
-            headers: new Headers({
-                "Authorization": localStorage.getItem("Authorization")
-            })
-        });
-        if (response.status >= 300) {
-            // const error = await response.text();
-            //Probably need to take in more information so it can add the watering schedule?
-            newPlant(user.photoURL)
-            return;
-        }
+    // async function fetchPlant() {
+    //     const response = await fetch(api.base + api.handlers.myuserPlant, {
+    //         method: "GET",
+    //         headers: new Headers({
+    //             "Authorization": localStorage.getItem("Authorization")
+    //         })
+    //     });
+    //     if (response.status >= 300) {
+    //         // const error = await response.text();
+    //         //Probably need to take in more information so it can add the watering schedule?
+    //         newPlant(user.photoURL)
+    //         return;
+    //     }
 
-        //not sure what this blob thing is
-        const imgBlob = await response.blob();
-        newPlant(URL.createObjectURL(imgBlob));
-    }
+    //     //not sure what this blob thing is
+    //     const imgBlob = await response.blob();
+    //     newPlant(URL.createObjectURL(imgBlob));
+    // }
 
-    useEffect(() => {
-        fetchPlant();
-        return;
-    }, []);
+    // useEffect(() => {
+    //     fetchPlant();
+    //     return;
+    // }, []);
 
     return <>
       <header>
@@ -40,7 +40,6 @@ const MainPageContent = ({ user, plants, setPage, addPlantCallback, toggleModal 
       </header>
       <PlantList plants={plants}/>
 
-      {plant && <img className={"avatar"} src={plant} alt={`${user.firstName}'s new plant`} />}
       <div><button onClick={(e) => { setPage(e, PageTypes.signedInAddedPlant) }}>Add Plant</button></div>
 
     </>
