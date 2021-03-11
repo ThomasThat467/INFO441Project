@@ -16,10 +16,12 @@ create table if not exists SignIns (
 );
 
 create table if not exists Plants (
-  ID int not null auto_increment primary key,
-  UserID int not null references Users(ID),
+  PlantID int not null auto_increment,
+  UserID int not null,
   PlantName varchar(255) not null, 
   WateringSchedule varchar(255) not null,
   LastWatered time not null,
-  PhotoURL varchar(2083) not null
+  PhotoURL varchar(2083) not null,
+  PRIMARY KEY (PlantID),
+  FOREIGN KEY (UserID) REFERENCES Users(ID)
 );
