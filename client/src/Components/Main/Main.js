@@ -23,6 +23,9 @@ const Main = ({ page, setPage, setAuthToken, plants, setUser, user, setPlants, a
     return <>
         {content}
         <SignOutButton setUser={setUser} setAuthToken={setAuthToken} />
+        <footer>
+          <p>Created by: Hailey Meister, Jisu Kim, Eric Gabrielson, and Thomas That</p>
+      </footer>
     </>
 }
 

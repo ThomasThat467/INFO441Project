@@ -60,9 +60,9 @@ export class AddPlantModal extends Component {
       <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} className="add-plant">
           <ModalHeader>
                 Create New Plant
-                <Button onClick={this.toggleModal} type="button" className="close" aria-label="Close">
+                {/* <Button className="ml-5" onClick={this.toggleModal} type="button" className="close" aria-label="Close">
                   &times;
-                </Button>
+                </Button> */}
           </ModalHeader>
           <ModalBody>
               <form>

@@ -47,7 +47,6 @@ h1 {
   background-color: white;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
-  /* width: 400px; */
   border-radius: 10px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.16), 0 1px 3px rgba(0,0,0,0.23);
 }
@@ -72,25 +71,16 @@ h1 {
 	max-height: 60vh;
 }
 
-button {
-	background-color: #689f38;
-}
-
-#landing {
-	height: 90vh;
-}
-
-
 .form-labels {
   padding: 1em;
   color: black;
 }
 
-.close {
-  background-color: white;
-  display: inline-block;
-  justify-content: space-between;
-  padding-right: 10em;
+
+footer {
+  padding: 1em;
+  margin-top: 1em;
+  background-color: #689f38;
 }
 
 
