@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PageTypes from '../../../../Constants/PageTypes';
 import api from '../../../../Constants/APIEndpoints';
 import {PlantList} from '../../Components/PlantList.js'
-import {AddPlant} from '../../Components/NewPlant/NewPlant'
+import {AddPlantModal} from '../../Components/AddPlant.js'
+
 
 const MainPageContent = ({ user, plants, setPage, addPlantCallback, toggleModal }) => {
     const [plant, newPlant] = useState(null)
@@ -35,8 +36,7 @@ const MainPageContent = ({ user, plants, setPage, addPlantCallback, toggleModal 
       <header>
         <nav className="navbar">
           <span><h1 className="navbar-brand">Plant Tracker</h1></span>
-          <AddPlant addPlantCallback={addPlantCallback} toggleModal={toggleModal} isModalOpen={false} plantName={this.plant}></AddPlant>
-        </nav>
+          <AddPlantModal addPlantCallback={addPlantCallback} toggleModal={toggleModal} isModalOpen={false}></AddPlantModal>        </nav>
       </header>
       <PlantList plants={plants}/>
 
