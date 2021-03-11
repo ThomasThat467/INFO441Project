@@ -35,7 +35,7 @@ export class PlantCard extends Component {
           <div className="cards col-sm-12 col-md-6 col-xl-4">
             <div className="card card-horizontal card-img-top">
               <div className="main-card">
-                <img src={plant.img} className="card-img" alt={plant.plantName} />
+                <img src={plant.photoURL} className="card-img" alt={plant.plantName} />
                 <div className="card-body">
                     <h2 className="card-title">{plant.plantName}</h2>
                     <p className="card-text">Watering Schedule</p>
