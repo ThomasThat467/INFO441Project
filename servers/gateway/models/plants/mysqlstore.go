@@ -10,8 +10,8 @@ type GetByType string
 
 // These are the enumerates for GetByType
 const (
-	ID      GetByType = "ID"
-	Species GetByType = "Species"
+	ID        GetByType = "ID"
+	PlantName GetByType = "PlantName"
 )
 
 // MySQLStore is a plant.Store backed by MySQL
@@ -33,7 +33,7 @@ func NewMySQLStore(dataSourceName string) (*MySQLStore, error) {
 // getByProvidedType gets a specific user given the provided type.
 // This requires the GetByType to be "unique" in the database.
 func (ms *MySQLStore) getByProvidedType(t GetByType, arg interface{}) (*Plant, error) {
-	sel := string("select ID, Species, WateringSchedule, PhotoURL from Plants where " + t + " = ?")
+	sel := string("select ID, UserID, PlantName, WateringSchedule, LastWatered, PhotoURL from Plants where " + t + " = ?")
 
 	rows, err := ms.Database.Query(sel, arg)
 	if err != nil {
@@ -47,8 +47,10 @@ func (ms *MySQLStore) getByProvidedType(t GetByType, arg interface{}) (*Plant, e
 	rows.Next()
 	if err := rows.Scan(
 		&plant.ID,
-		&plant.Species,
+		&plant.UserID,
+		&plant.PlantName,
 		&plant.WateringSchedule,
+		&plant.LastWatered,
 		&plant.PhotoURL); err != nil {
 		return nil, err
 	}
@@ -61,15 +63,15 @@ func (ms *MySQLStore) GetByID(id int64) (*Plant, error) {
 }
 
 //GetBySpecies returns the Plants of the given Species
-func (ms *MySQLStore) GetBySpecies(species string) (*Plant, error) {
-	return ms.getByProvidedType(Species, species)
+func (ms *MySQLStore) GetByPlantName(plantName string) (*Plant, error) {
+	return ms.getByProvidedType(PlantName, plantName)
 }
 
 //Insert inserts the user into the database, and returns
 //the newly-inserted User, complete with the DBMS-assigned ID
 func (ms *MySQLStore) Insert(plant *Plant) (*Plant, error) {
 	ins := "insert into Plants(Species, WateringSchedule, PhotoURL) values (?,?,?)"
-	res, err := ms.Database.Exec(ins, plant.Species, plant.WateringSchedule, plant.PhotoURL)
+	res, err := ms.Database.Exec(ins, plant.PlantName, plant.WateringSchedule, plant.PhotoURL)
 	if err != nil {
 		return nil, err
 	}
@@ -87,8 +89,8 @@ func (ms *MySQLStore) Insert(plant *Plant) (*Plant, error) {
 // //and returns the newly-updated plant
 func (ms *MySQLStore) Update(id int64, updates *Updates) (*Plant, error) {
 	// Assumes updates ALWAYS includes WateringSchedule and PhotoURL
-	upd := "update Plants set WateringSchedule = ?, PhotoURL = ? where ID = ?"
-	res, err := ms.Database.Exec(upd, updates.WateringSchedule, updates.PhotoURL, id)
+	upd := "update Plants set WateringSchedule = ?, LastWatered = ?, PhotoURL = ? where ID = ?"
+	res, err := ms.Database.Exec(upd, updates.WateringSchedule, updates.LastWatered, updates.PhotoURL, id)
 	if err != nil {
 		return nil, err
 	}
