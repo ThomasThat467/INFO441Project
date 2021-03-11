@@ -1,50 +1,15 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 body {
 	box-sizing: border-box;
+  margin: 0;
+  font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 12px;
+  padding: 2em;
 }
 
 header {
 	background-color: #689f38;
-	margin: 0;
-	padding: 1em;
+  width: 100%;
+  padding: 1em;
 }
 
 .wsBadge {
@@ -56,39 +21,51 @@ main {
 	padding-top: 2rem;
 }
 
-footer {
-	justify-content: center;
-}
-
 h1 {
 	color: #ffffff;
 	text-align: center;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 40px;
 }
 
-.plant-image {
-	max-height: 80vh;
-}
-
-.card-horizontal {
-    display: flex;
-    flex: 1 1 auto;
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .card-img {
-	max-width: 300px;
+	max-height: 60vh;
 }
 
 .card-img-top {
-	max-height: 300px;
+  max-height: 800px;
+  max-width: 400px;
 }
 
 .card {
-	margin: 1rem;
+  background-color: white;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  /* width: 400px; */
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.16), 0 1px 3px rgba(0,0,0,0.23);
 }
+
+.main-card {
+  padding: .5em;
+}
+
 
 .card:hover {
 	background-color: #539f3875;
 	transition-duration: .5s;
+}
+
+
+.add-plant {
+  font-size: 18px;
+  margin: 2em;
 }
 
 #detailImage {
@@ -99,14 +76,62 @@ button {
 	background-color: #689f38;
 }
 
-button > a {
-	color: white;
-}
-
-#footer {
-	text-align: center;
-}
-
 #landing {
 	height: 90vh;
+}
+
+
+.form-labels {
+  padding: 1em;
+  color: black;
+}
+
+.close {
+  background-color: white;
+  display: inline-block;
+  justify-content: space-between;
+  padding-right: 10em;
+}
+
+
+/* Media Queries */
+
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+@media (max-width: 375px) {
+    .top-header, h1, h2, h3{
+      font-size: 1.7em;
+    }
+
+    body {
+      font-size: .8rem;
+    }
+}
+
+@media (min-width: 768px) {
+    body {
+      font-size: 1.2em
+    }
+
+}
+
+@media (min-width: 960px){
+    .card {
+      margin-left: 2rem;
+    }
+
 }

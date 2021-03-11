@@ -3,6 +3,7 @@ import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
 import {WateringSchedule} from './WateringSchedule.js'
 
 
+
 export class AddPlantModal extends Component {
     constructor(props) {
         super(props);
@@ -49,44 +50,44 @@ export class AddPlantModal extends Component {
         this.setState(changes); //update state
     }
 
-    render() {
+  render() {
 
-        return (
-            <div>
-                <Button onClick={this.toggleModal} className="btn btn-primary">
-                    Add Plant
+  return (
+    <div>
+      <Button onClick={this.toggleModal} className="btn btn-primary add-btn">
+          Add Plant
+      </Button>
+      <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} className="add-plant">
+          <ModalHeader>
+                Create New Plant
+                <Button onClick={this.toggleModal} type="button" className="close" aria-label="Close">
+                  &times;
                 </Button>
-                <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} className="add-plant">
-                    <ModalHeader>
-                        Create New Plant
-                        <Button onClick={this.toggleModal} type="button" className="close" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </Button>
-                    </ModalHeader>
-                    <ModalBody>
-                        <form>
-                            <label htmlFor="plantName">Plant Name</label>
-                            <input onChange={this.handleChange} type="text" name="plantName" id="plantName" value={this.state.plantName}/>
-                            <br/>
-                            <div className="input-group">
-                                <p>Watering Schedule</p>
-                                <WateringSchedule handleWateringSchedule={this.handleWateringSchedule} modifiable={true} value={this.state.wateringSchedule}></WateringSchedule>
-                            </div>
+          </ModalHeader>
+          <ModalBody>
+              <form>
+                  <label className="form-labels" htmlFor="plantName">Plant Name</label>
+                  <input onChange={this.handleChange} type="text" name="plantName" id="plantName" value={this.state.plantName}/>
+                  <br/>
+                  <div className="input-group form-labels">
+                      <p>Watering Schedule</p>
+                      <WateringSchedule handleWateringSchedule={this.handleWateringSchedule} modifiable={true} value={this.state.wateringSchedule}></WateringSchedule>
+                  </div>
 
-                            <div className="input-group">
-                                <div className="custom-file">
-                                    <label htmlFor="customFile" className="custom-file-label">Plant picture</label>
-                                    <input onChange={this.handleChange} type="file" name="fileUpload" value={this.state.img} className="custom-file-input" id="customFile"/>	
-                                </div>
-                            </div>
-                        </form>
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button onClick={this.toggleModal} className="btn btn-secondary">Close</Button>
-                        <Button onClick={this.addPlant} id="newPlant" className="btn btn-primary">Save New Plant</Button>
-                    </ModalFooter>
-                </Modal>
-            </div>
-        );
-    }
+                  <div className="input-group">
+                      <div className="custom-file">
+                          <label htmlFor="customFile" className="custom-file-label">Upload a picture</label>
+                          <input onChange={this.handleChange} type="file" name="fileUpload" value={this.state.img} className="custom-file-input" id="customFile"/>	
+                      </div>
+                  </div>
+              </form>
+          </ModalBody>
+          <ModalFooter>
+              <Button onClick={this.toggleModal} className="btn btn-secondary">Close</Button>
+              <Button onClick={this.addPlant} id="newPlant" className="btn btn-primary">Save New Plant</Button>
+          </ModalFooter>
+      </Modal>
+    </div>
+    );
+  }
 }

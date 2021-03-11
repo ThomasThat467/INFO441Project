@@ -35,10 +35,16 @@ const MainPageContent = ({ user, plants, setPage, addPlantCallback, toggleModal 
     return <>
       <header>
         <nav className="navbar">
-          <span><h1 className="navbar-brand">Plant Tracker</h1></span>
-          <AddPlantModal addPlantCallback={addPlantCallback} toggleModal={toggleModal} isModalOpen={false}></AddPlantModal>        </nav>
+          <div>
+            <h1>Plant Tracker</h1>
+          </div>
+          <AddPlantModal addPlantCallback={addPlantCallback} toggleModal={toggleModal} isModalOpen={false}></AddPlantModal>
+        </nav>
       </header>
-      <PlantList plants={plants}/>
+      <body>
+          <PlantList plants={plants}/>        
+      </body>
+      
 
       {/* <div><button onClick={(e) => { setPage(e, PageTypes.signedInAddedPlant) }}>Add Plant</button></div> */}
 
