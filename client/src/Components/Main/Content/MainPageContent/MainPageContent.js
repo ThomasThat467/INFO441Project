@@ -41,7 +41,7 @@ const MainPageContent = ({ user, plants, setPage, addPlantCallback, toggleModal 
       </header>
       <PlantList plants={plants}/>
 
-      {plant && <img className={"avatar"} src={plant} alt={`${user.firstName}'s new plant`} />}
+      {/* {plant && <img className={"avatar"} src={plant} alt={`${user.firstName}'s new plant`} />} */}
       <div><button onClick={(e) => { setPage(e, PageTypes.signedInAddedPlant) }}>Add Plant</button></div>
 
     </>
