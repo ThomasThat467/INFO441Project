@@ -51,6 +51,7 @@ export class AddPlantModal extends Component {
         }
         const user = await response.json();
         this.props.setUser(user);
+        this.props.getCurrentPlants()
         
         this.toggleModal();
     }

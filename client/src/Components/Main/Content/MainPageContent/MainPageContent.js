@@ -5,7 +5,7 @@ import {PlantList} from '../../Components/PlantList.js'
 import {AddPlantModal} from '../../Components/AddPlant.js'
 
 
-const MainPageContent = ({ plants, addPlantCallback, toggleModal, setUser, setAuthToken}) => {
+const MainPageContent = ({ plants, addPlantCallback, getCurrentPlants, toggleModal, setUser, setAuthToken}) => {
 
     return <>
       <header>
@@ -13,7 +13,7 @@ const MainPageContent = ({ plants, addPlantCallback, toggleModal, setUser, setAu
           <div>
             <h1>Plant Tracker</h1>
           </div>
-          <AddPlantModal addPlantCallback={addPlantCallback} toggleModal={toggleModal} isModalOpen={false} setUser={setUser} setAuthToken={setAuthToken}></AddPlantModal>
+          <AddPlantModal addPlantCallback={addPlantCallback} getCurrentPlants={getCurrentPlants} toggleModal={toggleModal} isModalOpen={false} setUser={setUser} setAuthToken={setAuthToken}></AddPlantModal>
         </nav>
       </header>
       <body>

@@ -130,6 +130,7 @@ class App extends Component {
                     <Main page={page}
                         setPage={this.setPage}
                         setAuthToken={this.setAuthToken}
+                        getCurrentPlants={this.getCurrentPlants}
                         user={user}
                         setUser={this.setUser}
                         plants={plants}
