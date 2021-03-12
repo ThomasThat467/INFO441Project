@@ -74,6 +74,8 @@ class App extends Component {
                 return;
             }
             const plants = await response.json()
+            console.log("plants json response:")
+            console.log(plants)
             this.setPlants(plants);
     
         }

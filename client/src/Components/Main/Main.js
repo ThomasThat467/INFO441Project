@@ -18,10 +18,9 @@ const Main = ({ page, setPage, setAuthToken, plants, setUser, user, setPlants, a
             {content}
           </div>
         </div>
-        
         <footer>
           <p className="footer-text">&#169; Hailey Meister, Jisu Kim, Eric Gabrielson, and Thomas That</p>
-      </footer>
+        </footer>
     </>
 }
 
