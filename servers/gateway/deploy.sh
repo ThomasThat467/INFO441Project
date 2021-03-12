@@ -1,5 +1,5 @@
 docker rm -f rServe
-docker network rm sessNetwork
+docker network rm 441ProjectNetwork
 docker rm -f msqlconsole
 docker rm -f gateway
 

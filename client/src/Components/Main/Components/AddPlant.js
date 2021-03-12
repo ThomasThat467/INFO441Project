@@ -11,7 +11,7 @@ export class AddPlantModal extends Component {
             isModalOpen: props.isModalOpen,
             plantName: '',
             wateringSchedule:[],
-            img: ''
+            photoURL: ''
         };
         this.toggleModal = this.toggleModal.bind(this);
         this.addPlantCallback = this.props.addPlantCallback;
@@ -24,7 +24,7 @@ export class AddPlantModal extends Component {
     }
 
     addPlant() {
-        //let newPlant = {plantName: this.state.plantName, wateringSchedule: this.state.wateringSchedule, lastWatered: '', img: this.state.img}
+        //let newPlant = {plantName: this.state.plantName, wateringSchedule: this.state.wateringSchedule, lastWatered: '', photoURL: this.state.photoURL}
         //plantsRef.push(newPlant);
 
         // plantsRef.on('value', (snapshot) => {
@@ -33,6 +33,30 @@ export class AddPlantModal extends Component {
         // });
         this.toggleModal();
     }
+
+    // sendRequest = async (e) => {
+    //     e.preventDefault();
+    //     const { plantName, wateringSchedule, photoURL } = this.state;
+    //     const sendData = { firstName, lastName };
+    //     const response = await fetch(api.base + api.handlers.myuser, {
+    //         method: "POST",
+    //         body: JSON.stringify(sendData),
+    //         headers: new Headers({
+    //             "Authorization": localStorage.getItem("Authorization"),
+    //             "Content-Type": "application/json"
+    //         })
+    //     });
+    //     if (response.status >= 300) {
+    //         const error = await response.text();
+    //         console.log(error);
+    //         this.setError(error);
+    //         return;
+    //     }
+    //     alert("Plant added") // TODO make this better by refactoring errors
+    //     const user = await response.json();
+    //     this.props.setUser(user);
+    // }
+
 
     handleWateringSchedule = (schedule) => {
         console.log("handleWateringScheduleCalled", schedule);
@@ -76,7 +100,7 @@ export class AddPlantModal extends Component {
                   <div className="input-group">
                       <div className="custom-file">
                           <label htmlFor="customFile" className="custom-file-label">Upload a picture</label>
-                          <input onChange={this.handleChange} type="file" name="fileUpload" value={this.state.img} className="custom-file-input" id="customFile"/>	
+                          <input onChange={this.handleChange} type="file" name="fileUpload" value={this.state.photoURL} className="custom-file-input" id="customFile"/>	
                       </div>
                   </div>
               </form>

@@ -28,8 +28,6 @@ type Updates struct {
 
 //NewPlant represents a new plant that added by a user
 type NewPlant struct {
-	//not sure new plant needs userID
-	UserID           int64  `json:"userId"`
 	PlantName        string `json:"plantName"`
 	WateringSchedule string `json:"schedule"`
 	LastWatered      string `json:"lastWatered"`
@@ -37,10 +35,10 @@ type NewPlant struct {
 }
 
 //ToPlant converts the NewPlant to a Plant
-func (np *NewPlant) ToPlant() (*Plant, error) {
+func (np *NewPlant) ToPlant(userID int64) (*Plant, error) {
 
 	newPlant := &Plant{
-		UserID:           np.UserID,
+		UserID:           userID,
 		PlantName:        np.PlantName,
 		WateringSchedule: np.WateringSchedule,
 		LastWatered:      np.LastWatered,
