@@ -3,7 +3,6 @@ import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
 import {WateringSchedule} from './WateringSchedule.js'
 import SignOutButton from '../Components/SignOutButton/SignOutButton';
 import api from '../../../Constants/APIEndpoints';
-import Errors from '../../Errors/Errors';
 
 
 export class AddPlantModal extends Component {
