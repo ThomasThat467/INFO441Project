@@ -15,7 +15,7 @@ export class PlantList extends Component {
         let plantList;
         console.log(this.props.plants.Plants);
         if(this.props.plants.Plants ==  null) {
-          return
+          return <div className="card p-5">You are not currently tracking any plants. Add one above!</div>
         } else {
           plantList = this.props.plants.Plants.map((plant) => {
             return <PlantCard  key={plant.plantName} plant={plant}></PlantCard>
