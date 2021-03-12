@@ -7,7 +7,18 @@ export class PlantList extends Component {
         super(props);
 
         this.state = {plants:[]};
+        
     }
+    componentDidMount() {
+      // fetch('data/inventory.json')
+      // .then( (response) => {
+      //     return response.json();
+      // })
+      // .then( (data) => {
+      //     this.setState({plants: data.plantInventory})
+      // })
+      this.props.getCurrentPlants()
+  }
 
     
     
