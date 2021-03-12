@@ -29,6 +29,10 @@ class App extends Component {
         this.getCurrentPlants()
     }
 
+    componentDidUpdate() {
+        this.getCurrentPlants()
+    }
+
 
     /**
      * @description Gets the users
