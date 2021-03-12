@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
 import {WateringSchedule} from './WateringSchedule.js'
-import SignOutButton from '../Components/SignOutButton/SignOutButton';
+import SignOutButton from './SignOutButton/SignOutButton.js';
 
 
 
@@ -16,26 +16,12 @@ export class AddPlantModal extends Component {
         };
         this.toggleModal = this.toggleModal.bind(this);
         this.addPlantCallback = this.props.addPlantCallback;
-        // this.addPlant = this.addPlant.bind(this);
     }
 
     toggleModal() {
         console.log("toggleModal called")
         this.setState({isModalOpen: !this.state.isModalOpen});
     }
-
-    // plantRefs = call to database
-
-    // addPlant() {
-    //     let newPlant = {plantName: this.state.plantName, wateringSchedule: this.state.wateringSchedule, lastWatered: '', img: this.state.img}
-    //     // plantsRef.push(newPlant);
-
-    //     // plantsRef.on('value', (snapshot) => {
-    //     //     let plants = snapshot.val();
-    //     //     this.setState({plants: plants})
-    //     // });
-    //     this.toggleModal();
-    // }
 
     handleWateringSchedule = (schedule) => {
         console.log("handleWateringScheduleCalled", schedule);
@@ -62,9 +48,6 @@ export class AddPlantModal extends Component {
       <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} className="add-plant">
           <ModalHeader>
                 Create New Plant
-                {/* <Button className="ml-5" onClick={this.toggleModal} type="button" className="close" aria-label="Close">
-                  &times;
-                </Button> */}
           </ModalHeader>
           <ModalBody>
               <form>

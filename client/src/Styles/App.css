@@ -6,7 +6,7 @@ body {
 	box-sizing: border-box;
   margin: 0;
   font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 12px;
+  font-size: 18px;
   padding: 2em;
 }
 
@@ -20,9 +20,11 @@ header {
   height: 100px;
   left: 0;
 }
+
 .below-header {
   padding-top: 80px;;
 }
+
 .wsBadge {
 	margin: .25rem;
 }
@@ -35,7 +37,7 @@ main {
 h1 {
 	color: #ffffff;
 	text-align: center;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
   font-size: 40px;
 }
 
@@ -123,6 +125,10 @@ button {
   padding: 1em;
 }
 
+.add-plant {
+  margin: 4em auto;
+}
+
 
 /* Media Queries */
 
@@ -136,25 +142,19 @@ button {
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 @media (max-width: 375px) {
     .top-header, h1, h2, h3{
       font-size: 1.7em;
     }
 
     body {
-      font-size: .8rem;
+      font-size: 1rem;
     }
 }
 
 @media (min-width: 768px) {
     body {
-      font-size: 1.2em
+      font-size: 1em;
     }
 
 }
