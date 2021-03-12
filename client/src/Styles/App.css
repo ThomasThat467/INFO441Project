@@ -1,5 +1,9 @@
 html {
   min-height: 100%;
+    /* position:relative; 
+    margin:0;
+    padding:0;
+    overflow:auto;  */
 }
 
 body {
@@ -8,6 +12,10 @@ body {
   font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: 18px;
   padding: 2em;
+    /* position:relative; 
+    padding:0;
+    overflow:auto;
+    margin-top: 100px;  */
 }
 
 header {
@@ -104,7 +112,7 @@ h1 {
 }
 
 footer {
-  position: absolute;
+  position: relative;
   width: 100%;
   left: 0;
   bottom: 0;
