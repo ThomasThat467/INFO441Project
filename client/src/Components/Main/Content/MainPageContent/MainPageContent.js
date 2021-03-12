@@ -17,7 +17,7 @@ const MainPageContent = ({ plants, addPlantCallback, getCurrentPlants, toggleMod
         </nav>
       </header>
       <body>
-          <PlantList plants={plants}/>        
+          <PlantList plants={plants} getCurrentPlants={getCurrentPlants}/>        
       </body>
 
     </>
