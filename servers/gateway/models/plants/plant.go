@@ -21,7 +21,7 @@ type Plant struct {
 
 //Updates represents allowed updates to a plant
 type Updates struct {
-	WateringSchedule []string `json:"schedule"`
+	WateringSchedule string   `json:"schedule"`
 	LastWatered      string   `json:"lastWatered"`
 	PhotoURL         string   `json:"photoURL"`
 }

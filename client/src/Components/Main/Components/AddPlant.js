@@ -34,7 +34,8 @@ export class AddPlantModal extends Component {
 
     addPlant = async (e) => {
         e.preventDefault(); 
-        let newPlant = {plantName: this.state.plantName, wateringSchedule: this.state.wateringSchedule.join(), lastWatered: '', img: this.state.img}
+        var newDate = new Date();
+        let newPlant = {plantName: this.state.plantName, wateringSchedule: this.state.wateringSchedule.join(), lastWatered: newDate.toISOString().slice(0, 10), photoURL: './img/PlantIcon.png'}
         const response = await fetch(api.base + api.handlers.plant, {
             method: "POST",
             body: JSON.stringify(newPlant),
@@ -57,7 +58,7 @@ export class AddPlantModal extends Component {
 
     handleWateringSchedule = (schedule) => {
         console.log("handleWateringScheduleCalled", schedule);
-        //this.state.wateringSchedule = schedule;
+        this.state.wateringSchedule = schedule;
     }
 
     handleChange = (event) => {
@@ -91,12 +92,12 @@ export class AddPlantModal extends Component {
                       <WateringSchedule handleWateringSchedule={this.handleWateringSchedule} modifiable={true} value={this.state.wateringSchedule}></WateringSchedule>
                   </div>
 
-                  <div className="input-group">
+                  {/* <div className="input-group">
                       <div className="custom-file">
                           <label htmlFor="customFile" className="custom-file-label">Upload a picture</label>
                           <input onChange={this.handleChange} type="file" name="fileUpload" value={this.state.photoURL} className="custom-file-input" id="customFile"/>	
                       </div>
-                  </div>
+                  </div> */}
               </form>
           </ModalBody>
           <ModalFooter>
