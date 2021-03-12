@@ -133,7 +133,7 @@ class App extends Component {
                         getCurrentPlants={this.getCurrentPlants}
                         user={user}
                         setUser={this.setUser}
-                        plants={plants}
+                        plants={this.state.plants}
                         setPlants={this.setPlants} />
                     :
                     <Auth page={page}
