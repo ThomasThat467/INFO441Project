@@ -87,13 +87,16 @@ class SignIn extends Component {
                 </div>
               </nav>
             </header>
-            <Errors error={error} setError={this.setError} />
-            <SignForm
-                setField={this.setField}
-                submitForm={this.submitForm}
-                values={values}
-                fields={this.fields} />
-            <button className="btn btn-success mt-2 auth-btn" onClick={(e) => this.props.setPage(e, PageTypes.signUp)}>Sign up instead</button>
+            <div className="below-header">
+              <Errors error={error} setError={this.setError} />
+              <SignForm
+                  setField={this.setField}
+                  submitForm={this.submitForm}
+                  values={values}
+                  fields={this.fields} />
+              <button className="btn btn-success mt-2 auth-btn" onClick={(e) => this.props.setPage(e, PageTypes.signUp)}>Sign up instead</button>
+            </div>
+            
         </>
     }
 }

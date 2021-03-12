@@ -1,7 +1,6 @@
 import React from 'react';
 import PageTypes from '../../Constants/PageTypes';
 import MainPageContent from './Content/MainPageContent/MainPageContent';
-// import SignOutButton from './Components/SignOutButton/SignOutButton';
 
 const Main = ({ page, setPage, setAuthToken, plants, setUser, user, setPlants, addPlantCallback, toggleModal }) => {
     let content;
@@ -14,7 +13,12 @@ const Main = ({ page, setPage, setAuthToken, plants, setUser, user, setPlants, a
       {contentPage && <button onClick={(e) => setPage(e, PageTypes.signedInMain)}>Back to main</button>}</>;
     }
     return <>
-        {content}
+        <div className="wrapper">
+          <div className="content-inside">
+            {content}
+          </div>
+        </div>
+        
         <footer>
           <p className="footer-text">&#169; Hailey Meister, Jisu Kim, Eric Gabrielson, and Thomas That</p>
       </footer>
