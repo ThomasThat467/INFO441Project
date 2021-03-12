@@ -11,29 +11,29 @@ type PlantInventory struct {
 
 // Plant ...
 type Plant struct {
-	ID               int64  `json:"id"`
-	UserID           int64  `json:"userId"`
-	PlantName        string `json:"plantName"`
-	WateringSchedule string `json:"schedule"`
-	LastWatered      string `json:"lastWatered"`
-	PhotoURL         string `json:"photoURL"`
+	ID               int64    `json:"id"`
+	UserID           int64    `json:"userId"`
+	PlantName        string   `json:"plantName"`
+	WateringSchedule []string `json:"schedule"`
+	LastWatered      string   `json:"lastWatered"`
+	PhotoURL         string   `json:"photoURL"`
 }
 
 //Updates represents allowed updates to a plant
 type Updates struct {
-	WateringSchedule string `json:"schedule"`
-	LastWatered      string `json:"lastWatered"`
-	PhotoURL         string `json:"photoURL"`
+	WateringSchedule []string `json:"schedule"`
+	LastWatered      string   `json:"lastWatered"`
+	PhotoURL         string   `json:"photoURL"`
 }
 
 //NewPlant represents a new plant that added by a user
 type NewPlant struct {
 	//not sure new plant needs userID
-	UserID           int64  `json:"userId"`
-	PlantName        string `json:"plantName"`
-	WateringSchedule string `json:"schedule"`
-	LastWatered      string `json:"lastWatered"`
-	PhotoURL         string `json:"photoURL"`
+	UserID           int64    `json:"userId"`
+	PlantName        string   `json:"plantName"`
+	WateringSchedule []string `json:"schedule"`
+	LastWatered      string   `json:"lastWatered"`
+	PhotoURL         string   `json:"photoURL"`
 }
 
 //ToPlant converts the NewPlant to a Plant
