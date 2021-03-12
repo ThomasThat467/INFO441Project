@@ -45,7 +45,7 @@ export class PlantCard extends Component {
               </div>
               
               <div className="card-footer">
-                  <p>Last watered: 2020-05-14T17:00:10.859Z</p>
+                  <p>{"Last Watered: " + plant.lastWatered /*Last watered: 2020-05-14T17:00:10.859Z*/}</p>
               </div>
             </div>
           </div>

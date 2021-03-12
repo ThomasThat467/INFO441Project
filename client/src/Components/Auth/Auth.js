@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import PageTypes from '../../Constants/PageTypes';
 import SignUp from './Components/SignUp/SignUp';
 import SignIn from './Components/SignIn/SignIn';
-import ForgotPassword from './Components/ForgotPassword/ForgotPassword';
+// import ForgotPassword from './Components/ForgotPassword/ForgotPassword';
 
 /**
  * @class Auth
@@ -15,9 +15,9 @@ const Auth = ({ page, setPage, setAuthToken, setUser }) => {
         case PageTypes.signUp:
             return <SignUp setPage={setPage} setAuthToken={setAuthToken} setUser={setUser} />
         case PageTypes.signIn:
-            return <SignIn setPage={setPage} setAuthToken={setAuthToken} setUser={setUser} />
-        case PageTypes.forgotPassword:
-            return <ForgotPassword setPage={setPage} />;
+            return <SignIn setPage={setPage} setAuthToken={setAuthToken} setUser={setUser} />;
+        // case PageTypes.forgotPassword:
+        //     return <ForgotPassword setPage={setPage} />;
         default:
             return <>Error, invalid path reached</>
     }

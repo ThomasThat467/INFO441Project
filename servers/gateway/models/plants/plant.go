@@ -14,7 +14,7 @@ type Plant struct {
 	ID               int64  `json:"id"`
 	UserID           int64  `json:"userId"`
 	PlantName        string `json:"plantName"`
-	WateringSchedule string `json:"schedule"`
+	WateringSchedule string `json:"wateringSchedule"`
 	LastWatered      string `json:"lastWatered"`
 	PhotoURL         string `json:"photoURL"`
 }
@@ -29,7 +29,7 @@ type Updates struct {
 //NewPlant represents a new plant that added by a user
 type NewPlant struct {
 	PlantName        string `json:"plantName"`
-	WateringSchedule string `json:"schedule"`
+	WateringSchedule string `json:"wateringSchedule"`
 	LastWatered      string `json:"lastWatered"`
 	PhotoURL         string `json:"photoURL"`
 }
