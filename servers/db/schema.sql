@@ -8,19 +8,12 @@ create table if not exists Users (
     PhotoURL varchar(2083) not null
 );
 
-create table if not exists SignIns (
-  id int not null auto_increment primary key,
-  UserID int not null,
-  SignInTime varchar(255) not null,
-  IP varchar(255) not null
-);
-
 create table if not exists Plants (
   PlantID int not null auto_increment,
   UserID int not null,
   PlantName varchar(255) not null, 
   WateringSchedule varchar(255) not null,
-  LastWatered time not null,
+  LastWatered date not null,
   PhotoURL varchar(2083) not null,
   PRIMARY KEY (PlantID),
   FOREIGN KEY (UserID) REFERENCES Users(ID)

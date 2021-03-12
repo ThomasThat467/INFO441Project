@@ -28,7 +28,14 @@ func (ctx *HandlerContext) PlantHandler(w http.ResponseWriter, r *http.Request) 
 				return
 			}
 			//create new plant
-			createNewPlant, err := newPlant.ToPlant()
+			currSess := &SessionState{}
+			_, err = sessions.GetState(r, ctx.SigningKey, ctx.SessionStore, currSess)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusUnauthorized)
+				return
+			}
+			currUserID := currSess.SessionUser.ID
+			createNewPlant, err := newPlant.ToPlant(currUserID)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
