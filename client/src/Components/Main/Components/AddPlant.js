@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
 import {WateringSchedule} from './WateringSchedule.js'
-import SignOutButton from './SignOutButton/SignOutButton.js';
+import SignOutButton from '../Components/SignOutButton/SignOutButton';
+import api from '../../../Constants/APIEndpoints';
+import Errors from '../../Errors/Errors';
 
 
 export class AddPlantModal extends Component {
@@ -15,6 +17,7 @@ export class AddPlantModal extends Component {
         };
         this.toggleModal = this.toggleModal.bind(this);
         this.addPlantCallback = this.props.addPlantCallback;
+        this.addPlant = this.addPlant.bind(this);
     }
 
     toggleModal() {
@@ -22,28 +25,34 @@ export class AddPlantModal extends Component {
         this.setState({isModalOpen: !this.state.isModalOpen});
     }
 
-    // sendRequest = async (e) => {
-    //     e.preventDefault();
-    //     const { plantName, wateringSchedule, photoURL } = this.state;
-    //     const sendData = { firstName, lastName };
-    //     const response = await fetch(api.base + api.handlers.myuser, {
-    //         method: "POST",
-    //         body: JSON.stringify(sendData),
-    //         headers: new Headers({
-    //             "Authorization": localStorage.getItem("Authorization"),
-    //             "Content-Type": "application/json"
-    //         })
-    //     });
-    //     if (response.status >= 300) {
-    //         const error = await response.text();
-    //         console.log(error);
-    //         this.setError(error);
-    //         return;
-    //     }
-    //     alert("Plant added") // TODO make this better by refactoring errors
-    //     const user = await response.json();
-    //     this.props.setUser(user);
-    // }
+    /**
+     * @description setError sets the error message
+     */
+         setError = (error) => {
+            this.setState({ error })
+        }
+
+    addPlant = async (e) => {
+        e.preventDefault(); 
+        let newPlant = {plantName: this.state.plantName, wateringSchedule: this.state.wateringSchedule.join(), lastWatered: '', img: this.state.img}
+        const response = await fetch(api.base + api.handlers.plant, {
+            method: "POST",
+            body: JSON.stringify(newPlant),
+            headers: new Headers({
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem("Authorization")
+            })
+        });
+        if (response.status >= 300) {
+            const error = await response.text();
+            this.setError(error);
+            return;
+        }
+        const user = await response.json();
+        this.props.setUser(user);
+        
+        this.toggleModal();
+    }
 
 
     handleWateringSchedule = (schedule) => {
