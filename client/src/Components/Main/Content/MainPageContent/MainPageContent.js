@@ -1,6 +1,3 @@
-// import React, { useState, useEffect } from 'react';
-// import PageTypes from '../../../../Constants/PageTypes';
-// import api from '../../../../Constants/APIEndpoints';
 import {PlantList} from '../../Components/PlantList.js'
 import {AddPlantModal} from '../../Components/AddPlant.js'
 
@@ -17,9 +14,13 @@ const MainPageContent = ({ plants, addPlantCallback, getCurrentPlants, toggleMod
         </nav>
       </header>
       <body>
+        <div className="content-inside">
           <PlantList plants={plants} getCurrentPlants={getCurrentPlants}/>        
+        </div>
       </body>
-
+      <footer>
+          <p className="footer-text">&#169; Hailey Meister, Jisu Kim, Eric Gabrielson, and Thomas That</p>
+      </footer>
     </>
 }
 
