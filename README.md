@@ -13,7 +13,7 @@ As busy college students ourselves we understand the difficulty people face whil
 ## Technical Description
 
 ### Architectural Diagram
-![Plant Helper project Diagram](diagram/INFO441_PlantHelperDiagram.png)
+![Plant Helper project Diagram](diagram/INFO441_PlantHelperDiagram_V2.png)
 
 
 ### User Stories
