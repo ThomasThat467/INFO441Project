@@ -48,12 +48,10 @@ As busy college students ourselves we understand the difficulty people face whil
 
 | Method | Path           | Use Case                                                     |
 | :----: | -------------- | ------------------------------------------------------------ |
-|  GET   | /plant/{id}    | Retrieve the details of a plant from the user's inventory    |
-| PATCH  | /plant/{id}    | Update plant history (i.e. last watered, last fertilized)    |
-|  POST  | /plant/        | Add a new plant to the user's inventory for tracking         |
-| DELETE | /plant/{id}    | Remove a plant from the user's inventory                     |
-|  GET   | /schedule/{id} | Retrieve details about the user's watering or fertilizing schedules |
-|  POST  | /schedule/     | Create a new watering or fertilizing schedule for a user     |
+|  POST  | /plant        | Add a new plant to the user's inventory for tracking         |
+|  GET   | /plant/{id}    | Retrieve the list of plants from the user's inventory    |
+| PATCH  | /plant/{id}    | Update plant history (i.e. last watered, watering schedule)    |
+| DELETE  | /plant/{id}    | Delete certain plant from user's list    |
 |  POST  | /user          | Create a new user                                            |
 |  GET   | /users/{id}    | Retrieve a user profile                                      |
 |  POST  | /sessions      | Begin a new user session                                     |
