@@ -56,5 +56,3 @@ As busy college students ourselves we understand the difficulty people face whil
 |  GET   | /users/{id}    | Retrieve a user profile                                      |
 |  POST  | /sessions      | Begin a new user session                                     |
 | DELETE | /sessions/{id} | Delete a user session                                        |
-
-![Plant Helper ERD](diagram/PlantHelper_ERD.png)
