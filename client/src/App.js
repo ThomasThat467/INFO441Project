@@ -19,13 +19,6 @@ class App extends Component {
         this.getCurrentUser()
     }
     componentDidMount() {
-        // fetch('data/inventory.json')
-        // .then( (response) => {
-        //     return response.json();
-        // })
-        // .then( (data) => {
-        //     this.setState({plants: data.plantInventory})
-        // })
         this.getCurrentPlants()
     }
 
@@ -67,9 +60,6 @@ class App extends Component {
             });
             if (response.status >= 300) {
                 alert("Unable to retrieve plants...");
-                // localStorage.setItem("Authorization", "");
-                // this.setAuthToken("");
-                // this.setUser(null)
                 return;
             }
             const plants = await response.json()
