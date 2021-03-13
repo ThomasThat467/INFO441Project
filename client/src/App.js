@@ -29,7 +29,6 @@ class App extends Component {
         this.getCurrentPlants()
     }
 
-
     /**
      * @description Gets the users
      */
